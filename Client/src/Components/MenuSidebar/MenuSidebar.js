@@ -1,5 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Col } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,12 +10,12 @@ import {
   faBookmark,
   faCogs,
 } from "@fortawesome/free-solid-svg-icons";
-
+import "../../Layout/SideManu.css";
 function MenuSidebar() {
   return (
-    <div className="pt-2 mx-1 ">
+    <Col className="user-side-menu mt-3 mx-1 " xs={1} md={2} lg={2}>
       <img
-        className="logo"
+        className="logo rounded-pill align-self-start"
         alt="Logo for Podcast Commuter"
         src="https://www.placecage.com/g/151/100"
       />
@@ -67,7 +68,7 @@ function MenuSidebar() {
           </li>
         </ul>
       </nav>
-    </div>
+    </Col>
   );
 }
 

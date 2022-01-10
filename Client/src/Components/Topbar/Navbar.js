@@ -9,7 +9,6 @@ import {
 import "../../Layout/Navbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 function Navbar() {
   return (
     <div className="navbar shadow-lg d-flex flex-row justify-content-between">
@@ -41,12 +40,16 @@ function Navbar() {
           size="md"
         ></FontAwesomeIcon>
       </div>
-      <div>
-        <img className="rounded-pill me-4" src="https://www.placecage.com/30/30" />
+      <div className="d-flex flex-row ">
+        <img
+          className="rounded-pill me-3"
+          src="https://www.placecage.com/30/30"
+        />
+        <span className="me-3 fs-6">UserName</span>
         <FontAwesomeIcon
           icon={faSignOutAlt}
           style={{ cursor: "pointer" }}
-          className="me-5 mt-2 text-light"
+          className="me-5 mt-1 text-light"
           size="md"
         ></FontAwesomeIcon>
       </div>

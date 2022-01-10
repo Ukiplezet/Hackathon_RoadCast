@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
+import "../Layout/MainContainer.css";
 
 import ChatSidebar from "../Components/ChatSidebar/ChatSidebar";
 import PlayerFooter from "../Components/Footer/PlayerFooter";
@@ -11,13 +12,11 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <section className="center-page d-flex flex-col justify-content-evenly">
-        <div className="d-flex flex-col justify-content-evenly">
-          <MenuSidebar />
-          <CenterContent className="" />
-          <ChatSidebar className="" />
-        </div>
-      </section>
+      <Container className="display-container d-flex flex-row justify-content-evenly">
+        <MenuSidebar />
+        <CenterContent className="" />
+        <ChatSidebar className="" />
+      </Container>
       <PlayerFooter />
     </>
   );
