@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row } from "react-bootstrap";
+
 import ChatSidebar from "../Components/ChatSidebar/ChatSidebar";
 import PlayerFooter from "../Components/Footer/PlayerFooter";
 import CenterContent from "../Components/MainContent/CenterContent";
