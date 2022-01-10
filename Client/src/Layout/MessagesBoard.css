@@ -1,0 +1,12 @@
+.message-center {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+.messages-board {
+  height: 60vh;
+  width: 22vw;
+  border-radius: 10px;
+  background-color: #2e3646;
+}

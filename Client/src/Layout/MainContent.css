@@ -1,0 +1,9 @@
+.center-content {
+  background-color: #131315;
+  border-right: 3px solid #343338;
+  border-left: 3px solid #343338;
+}
+
+.center-page {
+  height: 76vh;
+}

@@ -1,0 +1,16 @@
+footer {
+  background-color: #2e3646;
+  border-top: 45px solid #343338;
+  padding: 15px 0;
+}
+
+footer nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.audio-controller {
+  width: 120vh;
+  border-radius: 10px;
+}
