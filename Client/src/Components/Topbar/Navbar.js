@@ -17,13 +17,11 @@ function Navbar() {
           icon={faAngleLeft}
           style={{ cursor: "pointer" }}
           className="ms-4 mt-2 text-light"
-          size="md"
         ></FontAwesomeIcon>
         <FontAwesomeIcon
           icon={faAngleRight}
           style={{ cursor: "pointer" }}
           className="ms-4 me-5 mt-2 text-light"
-          size="md"
         ></FontAwesomeIcon>
         <img
           src="../../media/Podcasts-icon.png"
@@ -37,7 +35,6 @@ function Navbar() {
           icon={faSearch}
           style={{ cursor: "pointer" }}
           className="me-5 mt-2 text-light"
-          size="md"
         ></FontAwesomeIcon>
       </div>
       <div className="d-flex flex-row ">
@@ -50,7 +47,6 @@ function Navbar() {
           icon={faSignOutAlt}
           style={{ cursor: "pointer" }}
           className="me-5 mt-1 text-light"
-          size="md"
         ></FontAwesomeIcon>
       </div>
     </div>

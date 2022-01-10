@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Container, Row } from "react-bootstrap";
 import "../Layout/MainContainer.css";
+import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 
 import ChatSidebar from "../Components/ChatSidebar/ChatSidebar";
 import PlayerFooter from "../Components/Footer/PlayerFooter";
-import CenterContent from "../Components/MainContent/CenterContent";
 import MenuSidebar from "../Components/MenuSidebar/MenuSidebar";
 import Navbar from "../Components/Topbar/Navbar";
+import Routes from "./index";
 const Home = () => {
   return (
     <>
-      <Navbar />
-      <Container className="display-container d-flex flex-row justify-content-evenly">
-        <MenuSidebar />
-        <CenterContent className="" />
-        <ChatSidebar className="" />
-      </Container>
-      <PlayerFooter />
+      <BrowserRouter>
+        <Navbar />
+        <Container className="display-container d-flex flex-row justify-content-evenly">
+          <MenuSidebar />
+          <Routes />
+          <ChatSidebar className="" />
+        </Container>
+        <PlayerFooter />
+      </BrowserRouter>
     </>
   );
 };
