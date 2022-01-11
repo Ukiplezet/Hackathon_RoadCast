@@ -19,6 +19,7 @@ mongoose.connect(
 );
 
 // app.use("/*", require("./Routes"));
+app.use("/user", require("./Routes/UsersRoute"));
 app.use("/", require("./Routes/LoginSignupRoute"));
 app.listen(port, () => {
   console.log(`listening on ${port}`);
