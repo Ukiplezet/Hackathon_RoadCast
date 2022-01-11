@@ -34,7 +34,7 @@ function Routes() {
             component={SavedPodcasts}
           />
           <Route exact path="/settings/:loggedId" component={Settings} />
-          <Redirect push to={Home} />
+          {/* <Redirect push to={Home} /> */}
         </Switch>
       </Layout>
     );
@@ -43,7 +43,7 @@ function Routes() {
       <Layout>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Redirect push to={Home} />
+          {/* <Redirect push to={Home} /> */}
         </Switch>
       </Layout>
     );
