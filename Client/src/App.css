@@ -7,3 +7,15 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.searchForm {
+  margin: 1rem 0 0.5rem 0;
+}
+
+.searchButton {
+  margin-top: 1rem;
+}
+
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  margin: 1rem 0 0.5rem 0 !important;
+}

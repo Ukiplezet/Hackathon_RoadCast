@@ -4,6 +4,7 @@ import { Col, Container, Row, Button } from "react-bootstrap";
 import "../Layout/MainContainer.css";
 import { UserContext } from "../Context/AuthContext";
 import Login from "./Login";
+import SearchForm from "../Components/MainContent/SearchForm";
 
 const Home = () => {
   const { user } = useContext(UserContext);
@@ -26,6 +27,7 @@ const Home = () => {
         lg={7}
       >
         <h1>Plan you commute with style and at ease</h1>
+        <SearchForm />
       </Col>
     );
   } else {
