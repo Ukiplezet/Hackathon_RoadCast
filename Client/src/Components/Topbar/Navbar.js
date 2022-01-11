@@ -42,7 +42,7 @@ function Navbar() {
         ></FontAwesomeIcon>
 
         <img
-          style={{ height: "30px" }}
+          style={{ height: "40px" }}
           src="https://www.howtogeek.com/wp-content/uploads/2018/10/preview-12.png?width=1198&trim=1,1&bg-color=000&pad=1,1"
           alt="Logo"
           className="text-light"
@@ -65,7 +65,9 @@ function Navbar() {
               src="https://www.placecage.com/30/30"
               style={{ height: "30px" }}
             />
-            <span className="me-5 mt-2 pt-1 fs-6">UserName</span>
+            <span className="me-5 mt-2 pt-1 fs-6">
+              {user.firstName} {user.lastName}
+            </span>
             <div className="d-flex pt-1 flex-row">
               <FontAwesomeIcon
                 icon={faSignOutAlt}
@@ -82,7 +84,7 @@ function Navbar() {
         </>
       ) : (
         <div
-          className="d-flex flex-rownowrap  pt-1 "
+          className="d-flex flex-rownowrap  "
           style={{ cursor: "pointer" }}
           onClick={(e) => {
             e.preventDefault();
@@ -91,9 +93,8 @@ function Navbar() {
         >
           <FontAwesomeIcon
             icon={faSignInAlt}
-            className="me-2 mt-2 text-light"
+            className="me-5 mt-2 text-light"
           ></FontAwesomeIcon>
-          <p className="me-5  text-light">Login</p>
         </div>
       )}
       <Login modalOpen={modalOpen} handleModalOpen={openModalHandler} />
