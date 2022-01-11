@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Col } from "react-bootstrap";
+import { Col, Container } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,6 +11,7 @@ import {
   faCogs,
   faHome,
   faMapMarkedAlt,
+  faHeadphonesAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../Layout/SideManu.css";
 function MenuSidebar() {
@@ -31,7 +32,7 @@ function MenuSidebar() {
           <li className="py-1 d-flex">
             <a
               style={{ cursor: "pointer" }}
-              className="navbar-brand text-light fs-5"
+              className="navbar-brand text-light fs-6"
               to="/"
               href="/"
               onClick={(e) => {
@@ -46,7 +47,22 @@ function MenuSidebar() {
           <li className="py-1 d-flex">
             <a
               style={{ cursor: "pointer" }}
-              className="navbar-brand text-light fs-5"
+              className="navbar-brand text-light fs-6"
+              to="/listeningnow"
+              href="/listeningnow"
+              onClick={(e) => {
+                e.preventDefault();
+                history.push(`/listeningnow`);
+              }}
+            >
+              <FontAwesomeIcon icon={faHeadphonesAlt} className="me-2" />
+              Listening Now
+            </a>
+          </li>
+          <li className="py-1 d-flex">
+            <a
+              style={{ cursor: "pointer" }}
+              className="navbar-brand text-light fs-6"
               to="/map"
               href="/map"
               onClick={(e) => {
@@ -58,10 +74,11 @@ function MenuSidebar() {
               Map
             </a>
           </li>
+
           <li className="py-1 d-flex">
             <a
               style={{ cursor: "pointer" }}
-              className="navbar-brand text-light fs-5"
+              className="navbar-brand text-light fs-6"
               to="/friendslist"
               href="/friendslist"
               onClick={(e) => {
@@ -76,7 +93,7 @@ function MenuSidebar() {
           <li className="py-1 d-flex">
             <a
               style={{ cursor: "pointer" }}
-              className="navbar-brand text-light fs-5"
+              className="navbar-brand text-light fs-6"
               to="/discover"
               href="/discover"
               onClick={(e) => {
@@ -95,7 +112,7 @@ function MenuSidebar() {
           <li className="py-1 d-flex">
             <a
               style={{ cursor: "pointer" }}
-              className="navbar-brand text-light fs-5"
+              className="navbar-brand text-light fs-6"
               to="/savedpodcasts"
               href="/savedpodcasts"
               onClick={(e) => {
@@ -114,7 +131,7 @@ function MenuSidebar() {
           <li className="py-1 d-flex">
             <a
               style={{ cursor: "pointer" }}
-              className="navbar-brand text-light fs-5"
+              className="navbar-brand text-light fs-6"
               to="/userprofile"
               href="/userprofile"
               onClick={(e) => {
@@ -129,7 +146,7 @@ function MenuSidebar() {
           <li className="py-1 d-flex">
             <a
               style={{ cursor: "pointer" }}
-              className="navbar-brand text-light fs-5"
+              className="navbar-brand text-light fs-6"
               to="/settings"
               href="/settings"
               onClick={(e) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, ListGroup } from "react-bootstrap";
+import { Card, Col, Container, ListGroup } from "react-bootstrap";
 
 function Map() {
   return (
@@ -9,7 +9,7 @@ function Map() {
       md={8}
       lg={7}
     >
-      A map to show the user's live route to destination
+      <Col>A map to show the user's live route to destination</Col>
     </Col>
   );
 }

@@ -2,26 +2,17 @@ import React, { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Container, Row } from "react-bootstrap";
 import "../Layout/MainContainer.css";
-import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 
-import ChatSidebar from "../Components/ChatSidebar/ChatSidebar";
-import PlayerFooter from "../Components/Footer/Footer";
-import MenuSidebar from "../Components/MenuSidebar/MenuSidebar";
-import Navbar from "../Components/Topbar/Navbar";
-import Routes from "./index";
 const Home = () => {
   return (
-    <>
-      <BrowserRouter>
-        <Navbar />
-        <Container className="display-container d-flex flex-row justify-content-evenly">
-          <MenuSidebar />
-          <Routes />
-          <ChatSidebar className="" />
-        </Container>
-        <PlayerFooter />
-      </BrowserRouter>
-    </>
+    <Col
+      className="center-content shadow-lg pt-2 text-white"
+      xs={10}
+      md={8}
+      lg={7}
+    >
+      <h1>Plan you commute with style and at ease</h1>
+    </Col>
   );
 };
 
