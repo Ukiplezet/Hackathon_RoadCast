@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import "../App.css";
 import axios from "axios";
 import Box from "@mui/material/Box";
@@ -14,13 +14,19 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import { scroller } from 'react-scroll';
 
 export default function SearchForm() {
   const [request, setRequest] = useState(false);
+  const [startingPoint, setStartingPoint] = useState("");
   const [destination, setDestination] = useState("");
   const [choosePodcast, setChoosePodcast] = useState([]);
   const [transportation, setTransportation] = useState("Car");
   const [listOfPodcasts, setListOfPodcasts] = useState([]);
+
+  const startingPointOnChange = (event) => {
+    setStartingPoint(event.target.value);
+  };
 
   const destinationOnChange = (event) => {
     setDestination(event.target.value);
@@ -34,38 +40,28 @@ export default function SearchForm() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    // setChoosePodcast(event.target.value);
   };
 
   const transportationOnChange = (event) => {
     setTransportation(event.target.value);
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-
-    formData.append("destination", destination);
-    formData.append("choosePodcast", choosePodcast);
-    formData.append("transportation", transportation);
-    //not sure I need listOfPodcasts here
-    formData.append("listOfPodcasts", listOfPodcasts);
-
-    // URL inside Axios needs to be updates based on the BE
-    await axios
-      .post("http://localhost:5500/search", formData, {
+  useEffect(() => {
+    axios
+      .get("http://localhost:5500/podcasts", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
       })
       .then((response) => {
         setListOfPodcasts(response.data);
+        console.log(response.data);
       });
+  }, []);
 
-    setDestination("");
-    setChoosePodcast([]);
-    setTransportation("Car");
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setRequest(choosePodcast);
   };
 
   const requestedData = listOfPodcasts.filter(
@@ -109,16 +105,29 @@ export default function SearchForm() {
             justifyContent: "center",
             alignItems: "center",
             width: 450,
-            height: 400,
+            height: 500,
             borderRadius: "2%",
             marginTop: "2rem",
             marginLeft: "2rem",
           }}
         >
           <InputLabel className="searchForm" id="demo-simple-select-label">
+            Starting point
+          </InputLabel>
+          <TextField
+            style={{ width: "20rem" }}
+            className=""
+            id="startingPoint"
+            label="Starting Point"
+            value={startingPoint}
+            onChange={startingPointOnChange}
+            required
+          />
+          <InputLabel className="searchForm" id="demo-simple-select-label">
             Choose your destination
           </InputLabel>
           <TextField
+            style={{ width: "20rem" }}
             className=""
             id="destination"
             label="Destination"
@@ -130,6 +139,7 @@ export default function SearchForm() {
             How are you getting there?
           </InputLabel>
           <Select
+            style={{ width: "8rem" }}
             defaultValue="Car"
             label="Transportation"
             className=""
@@ -147,27 +157,6 @@ export default function SearchForm() {
           <InputLabel className="searchForm" id="demo-simple-select-label">
             Choose podcasts
           </InputLabel>
-          {/* <Select
-            defaultValue="News"
-            label="Choose a podcast"
-            className=""
-            id="choosePodcast"
-            required
-            onChange={podcastOnChange}
-          >
-            <MenuItem value="News">News</MenuItem>
-            <MenuItem value="Society and Culture">Society and Culture</MenuItem>
-            <MenuItem value="Comedy">Comedy</MenuItem>
-            <MenuItem value="Health">Health</MenuItem>
-            <MenuItem value="Business">Business</MenuItem>
-            <MenuItem value="Sports">Sports</MenuItem>
-            <MenuItem value="Education">Education</MenuItem>
-            <MenuItem value="True Crime">True Crime</MenuItem>
-            <MenuItem value="History">History</MenuItem>
-            <MenuItem value="Technology">Technology</MenuItem>
-            <MenuItem value="Entertainment">Entertainment</MenuItem>
-          </Select> */}
-
           <Select
             style={{ width: "20rem" }}
             labelId="demo-multiple-name-label"
