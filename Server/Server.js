@@ -11,15 +11,15 @@ const { API_PORT } = process.env;
 const port = process.env.PORT || API_PORT;
 const { MONGO_URI } = process.env;
 mongoose.connect(
-  "mongodb+srv://Ukiplezet:oIv0EqLP0kdqd1K0@cluster0.vheon.mongodb.net/users_db?retryWrites=true&w=majority",
+  "mongodb+srv://Hack_group3:HackYourFuture2022@cluster0.xekpo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }
 );
 
-app.use("/*", require("./Routes"));
-
+// app.use("/*", require("./Routes"));
+app.use("/", require("./Routes/LoginSignupRoute"));
 app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
