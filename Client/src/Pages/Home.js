@@ -5,7 +5,7 @@ import "../Layout/MainContainer.css";
 import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 
 import ChatSidebar from "../Components/ChatSidebar/ChatSidebar";
-import PlayerFooter from "../Components/Footer/PlayerFooter";
+import PlayerFooter from "../Components/Footer/Footer";
 import MenuSidebar from "../Components/MenuSidebar/MenuSidebar";
 import Navbar from "../Components/Topbar/Navbar";
 import Routes from "./index";

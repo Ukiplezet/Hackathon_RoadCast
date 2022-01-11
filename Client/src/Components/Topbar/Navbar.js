@@ -24,7 +24,8 @@ function Navbar() {
           className="ms-4 me-5 mt-2 text-light"
         ></FontAwesomeIcon>
         <img
-          src="../../media/Podcasts-icon.png"
+          style={{ height: "40px" }}
+          src="https://getheavy.com/wp-content/uploads/2019/12/spotify2019-830x350.jpg"
           alt="Logo"
           className="text-light"
         />

@@ -4,13 +4,15 @@ import SavedPodcasts from "./SavedPodcasts";
 import Settings from "./Settings";
 import Discover from "./Discover";
 import FriendsList from "./FriendsList";
-import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import CenterContent from "../Components/MainContent/CenterContent";
+import Map from "./Map";
 
 function Routes() {
   return (
     <Switch>
       <Route exact path="/userprofile" component={UserProfile} />
+      <Route exact path="/map" component={Map} />
       <Route exact path="/friendslist" component={FriendsList} />
       <Route exact path="/discover" component={Discover} />
       <Route exact path="/savedpodcasts" component={SavedPodcasts} />

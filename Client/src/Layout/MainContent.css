@@ -3,3 +3,21 @@
   border-right: 3px solid #343338;
   border-left: 3px solid #343338;
 }
+.custom-control {
+  background-color: #2e3646;
+  width: 1.5em;
+  height: 1.7em;
+  border-radius: 10px;
+}
+
+.custom-play-pause {
+  background-color: #2e3646;
+  border-radius: 10px;
+  width: 1.5em;
+  height: 1.7em;
+}
+
+.custom-slider-track {
+  width: 450px;
+  height: 10px;
+}

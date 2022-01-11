@@ -10,6 +10,7 @@ import {
   faBookmark,
   faCogs,
   faHome,
+  faMapMarkedAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../Layout/SideManu.css";
 function MenuSidebar() {
@@ -46,15 +47,15 @@ function MenuSidebar() {
             <a
               style={{ cursor: "pointer" }}
               className="navbar-brand text-light fs-5"
-              to="/userprofile"
-              href="/userprofile"
+              to="/map"
+              href="/map"
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/userprofile`);
+                history.push(`/map`);
               }}
             >
-              <FontAwesomeIcon icon={faUserCircle} className="me-2" />
-              User Profile
+              <FontAwesomeIcon icon={faMapMarkedAlt} className="me-2" />
+              Map
             </a>
           </li>
           <li className="py-1 d-flex">
@@ -108,6 +109,21 @@ function MenuSidebar() {
                 className="me-2"
               />
               Saved Podcasts
+            </a>
+          </li>
+          <li className="py-1 d-flex">
+            <a
+              style={{ cursor: "pointer" }}
+              className="navbar-brand text-light fs-5"
+              to="/userprofile"
+              href="/userprofile"
+              onClick={(e) => {
+                e.preventDefault();
+                history.push(`/userprofile`);
+              }}
+            >
+              <FontAwesomeIcon icon={faUserCircle} className="me-2" />
+              User Profile
             </a>
           </li>
           <li className="py-1 d-flex">

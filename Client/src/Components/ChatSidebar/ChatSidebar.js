@@ -24,7 +24,7 @@ function ChatSidebar() {
       md={2}
       lg={3}
     >
-      <div className="mt-3 mb-1">
+      <div className="mt-3 ">
         <FontAwesomeIcon
           icon={faAngleLeft}
           style={{ cursor: "pointer" }}

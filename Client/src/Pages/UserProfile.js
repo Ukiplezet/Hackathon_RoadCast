@@ -8,7 +8,12 @@ import { UserContext } from "../Context/AuthContext";
 
 export default function UserProfile() {
   return (
-    <Col xs={10} md={8} lg={7} className="center-content ">
+    <Col
+      xs={10}
+      md={8}
+      lg={7}
+      className="center-content shadow-lg pt-2 text-white"
+    >
       This is user Profile
     </Col>
   );
