@@ -4,12 +4,12 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
-// import api from "../utils/API";
-// import { UserContext } from "../Context/AuthContext";
-// import UserProvider from "../Context/AuthContext";
+import api from "../Utils/API";
+import { UserContext } from "../Context/AuthContext";
+import UserProvider from "../Context/AuthContext";
 
 const Login = (props) => {
-  // const { user, login, logout, setUser } = useContext(UserContext);
+  const { user, login, logout, setUser } = useContext(UserContext);
   const history = useHistory();
   const [registerView, setRegisterView] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -31,54 +31,53 @@ const Login = (props) => {
   const handleSignupSubmit = async (e) => {
     e.stopPropagation();
     e.preventDefault();
-    // if (password === passwordConfirm) {
-    //   try {
-    //     const response = await api.signUpUser({
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       password,
-    //       phoneNumber,
-    //     });
-    //     await settingLoggedUserContext(response);
-    //     const loggedId = response._id;
-    //     props.handleModalOpen();
-    //     history.push(`/${loggedId}`);
-    //   } catch (err) {
-    //     return err.message;
-    //   }
-    // } else {
-    //   alert("password doesnt match!");
-    //   logout();
-    // }
-    // setLocalStorage();
+    if (password === passwordConfirm) {
+      try {
+        const response = await api.signUpUser({
+          firstName,
+          lastName,
+          email,
+          password,
+          phoneNumber,
+        });
+        await settingLoggedUserContext(response);
+        const loggedId = response._id;
+        props.handleModalOpen();
+        history.push(`/${loggedId}`);
+      } catch (err) {
+        return err.message;
+      }
+    } else {
+      alert("password doesnt match!");
+      logout();
+    }
+    setLocalStorage();
   };
 
   const handleLoginSubmit = async (e) => {
     e.stopPropagation();
     e.preventDefault();
 
-    // try {
-    //   const response = await api.loginUser({
-    //     email,
-    //     password,
-    //   });
-    //   if (response.role === "admin") {
-    //     settingLoggedUserContext(response);
-    //     const loggedId = response._id;
-    //     props.handleModalOpen();
-    //     history.push(`/adminpanel/${loggedId}`);
-    //     alert("admin logged in");
-    //   } else {
-    //     await settingLoggedUserContext(response);
-    //     const loggedId = response._id;
-    //     props.handleModalOpen();
-    //     history.push(`/${loggedId}`);
-    //   }
-    // } catch (err) {
-    //   alert(err.message);
-    // }
-    // setLocalStorage();
+    try {
+      const response = await api.loginUser({
+        email,
+        password,
+      });
+      if (response.role === "admin") {
+        await settingLoggedUserContext(response);
+        const loggedId = response._id;
+        props.handleModalOpen();
+        history.push(`/${loggedId}`);
+      } else {
+        await settingLoggedUserContext(response);
+        const loggedId = response._id;
+        props.handleModalOpen();
+        history.push(`/${loggedId}`);
+      }
+    } catch (err) {
+      alert(err.message);
+    }
+    setLocalStorage();
   };
   const setLocalStorage = () => {
     const hours = 1;
@@ -89,177 +88,176 @@ const Login = (props) => {
     } else {
       if (now - setupTime > hours * 60 * 60 * 1000) {
         localStorage.clear();
-        // logout(user);
+        logout(user);
         localStorage.setItem("setupTime", now);
         history.push("/");
       }
     }
   };
 
-  // const settingLoggedUserContext = async (response) => {
-  //   const loggedUser = {
-  //     ...user,
-  //     email: response.email,
-  //     firstName: response.firstName,
-  //     lastName: response.lastName,
-  //     _id: response._id,
-  //     bio: response.bio,
-  //     phoneNumber: response.phoneNumber,
-  //     auth: response.token,
-  //     token: response.token,
-  //     role: response.role,
-  //   };
-  //   login(user);
-  //   localStorage.setItem("token", loggedUser.token);
-  //   localStorage.setItem("id", loggedUser._id);
+  const settingLoggedUserContext = async (response) => {
+    const loggedUser = {
+      ...user,
+      email: response.email,
+      firstName: response.firstName,
+      lastName: response.lastName,
+      _id: response._id,
+      bio: response.bio,
+      phoneNumber: response.phoneNumber,
+      auth: response.token,
+      token: response.token,
+      role: response.role,
+    };
+    login(loggedUser);
+    localStorage.setItem("token", loggedUser.token);
+    localStorage.setItem("id", loggedUser._id);
 
-  //   return setUser(loggedUser);
-  // };
+    return setUser(loggedUser);
+  };
 
   return (
-    // <UserProvider>
-    <Modal show={props.modalOpen} onHide={props.handleModalOpen}>
-      {" "}
-      {!registerView ? (
-        <form
-          className=" w-1/2 flex flex-col"
-          onSubmit={(e, email) => {
-            handleLoginSubmit(e, email);
-            setRegisterView(false);
-          }}
-        >
-          <Modal.Header className="justify-content-center">
-            <Modal.Title>Login:</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="">
-            <label className=" ">Email:</label>
-            <Form.Control
-              onChange={(e) => setEmail(e.target.value)}
-              name="email"
-              className=""
-              type="email"
-            />
-            <label className="">Password:</label>
-            <Form.Control
-              onChange={(e) => setPassword(e.target.value)}
-              name="password"
-              className=""
-              type="password"
-            />
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-between">
-            <Button
-              variant="danger"
-              onClick={() => {
-                props.handleModalOpen();
-                toggleView(false);
-              }}
-            >
-              Cancel
-            </Button>
-            <div className="d-flex flex-row">
-              <p
-                style={{ cursor: "pointer" }}
-                onClick={() => toggleView(true)}
-                className=" mx-2 p-button"
-              >
-                Need to Register?
-              </p>
-              <Button variant="primary" className="mx-2" type="submit">
-                Submit
-              </Button>
-            </div>
-          </Modal.Footer>
-        </form>
-      ) : (
-        <form
-          className=" flex-col "
-          onSubmit={(e) => {
-            handleSignupSubmit(e);
-            // setRegisterView(false);
-          }}
-        >
-          <Modal.Header className="justify-content-center">
-            <Modal.Title>Register:</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="">
-            <label className="">First Name:</label>
-            <Form.Control
-              onChange={(e) => setFirstName(e.target.value)}
-              name="firstName"
-              className=""
-              type="text"
-            />
-            <label className="">Last Name:</label>
-            <Form.Control
-              onChange={(e) => setLastName(e.target.value)}
-              name="lastName"
-              className=""
-              type="text"
-            />
-            <label className="">Email:</label>
-            <Form.Control
-              onChange={(e) => setEmail(e.target.value)}
-              name="email"
-              className=""
-              type="email"
-            />
-            <label className="">Password:</label>
-            <Form.Control
-              onChange={(e) => setPassword(e.target.value)}
-              name="password"
-              className=""
-              type="password"
-            />
-            <label className="">Confirm Password:</label>
-            <Form.Control
-              onChange={(e) => {
-                setPasswordConfirm(e.target.value);
-              }}
-              name="passwordConfirm"
-              className=""
-              type="password"
-            />
-            <label className=" ">Phone Number:</label>
-            <Form.Control
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              name="phoneNumber"
-              className="phoneNumber"
-              type="number"
-            />
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-between">
-            <Button
-              variant="danger"
-              onClick={() => {
-                props.handleModalOpen();
-                toggleView(false);
-              }}
-            >
-              Cancel
-            </Button>
-            <div className="d-flex flex-row">
-              <p
-                style={{ cursor: "pointer" }}
-                onClick={() => toggleView(false)}
-                className=" mx-2 p-button"
-              >
-                Already Registered?
-              </p>
+    <UserProvider>
+      <Modal show={props.modalOpen} onHide={props.handleModalOpen}>
+        {" "}
+        {!registerView ? (
+          <form
+            className=" w-1/2 flex flex-col"
+            onSubmit={(e, email) => {
+              handleLoginSubmit(e, email);
+              setRegisterView(false);
+            }}
+          >
+            <Modal.Header className="justify-content-center">
+              <Modal.Title>Login:</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="">
+              <label className=" ">Email:</label>
+              <Form.Control
+                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                className=""
+                type="email"
+              />
+              <label className="">Password:</label>
+              <Form.Control
+                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                className=""
+                type="password"
+              />
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-between">
               <Button
-                style={{ cursor: "pointer" }}
-                variant="primary"
-                type="submit"
-                className="mx-2"
+                variant="danger"
+                onClick={() => {
+                  props.handleModalOpen();
+                  toggleView(false);
+                }}
               >
-                Register
+                Cancel
               </Button>
-            </div>
-          </Modal.Footer>
-        </form>
-      )}
-    </Modal>
-    // </UserProvider>
+              <div className="d-flex flex-row">
+                <p
+                  style={{ cursor: "pointer" }}
+                  onClick={() => toggleView(true)}
+                  className=" mx-2 p-button"
+                >
+                  Need to Register?
+                </p>
+                <Button variant="primary" className="mx-2" type="submit">
+                  Submit
+                </Button>
+              </div>
+            </Modal.Footer>
+          </form>
+        ) : (
+          <form
+            className=" flex-col "
+            onSubmit={(e) => {
+              handleSignupSubmit(e);
+            }}
+          >
+            <Modal.Header className="justify-content-center">
+              <Modal.Title>Register:</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="">
+              <label className="">First Name:</label>
+              <Form.Control
+                onChange={(e) => setFirstName(e.target.value)}
+                name="firstName"
+                className=""
+                type="text"
+              />
+              <label className="">Last Name:</label>
+              <Form.Control
+                onChange={(e) => setLastName(e.target.value)}
+                name="lastName"
+                className=""
+                type="text"
+              />
+              <label className="">Email:</label>
+              <Form.Control
+                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                className=""
+                type="email"
+              />
+              <label className="">Password:</label>
+              <Form.Control
+                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                className=""
+                type="password"
+              />
+              <label className="">Confirm Password:</label>
+              <Form.Control
+                onChange={(e) => {
+                  setPasswordConfirm(e.target.value);
+                }}
+                name="passwordConfirm"
+                className=""
+                type="password"
+              />
+              <label className=" ">Phone Number:</label>
+              <Form.Control
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                name="phoneNumber"
+                className="phoneNumber"
+                type="number"
+              />
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-between">
+              <Button
+                variant="danger"
+                onClick={() => {
+                  props.handleModalOpen();
+                  toggleView(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <div className="d-flex flex-row">
+                <p
+                  style={{ cursor: "pointer" }}
+                  onClick={() => toggleView(false)}
+                  className=" mx-2 p-button"
+                >
+                  Already Registered?
+                </p>
+                <Button
+                  style={{ cursor: "pointer" }}
+                  variant="primary"
+                  type="submit"
+                  className="mx-2"
+                >
+                  Register
+                </Button>
+              </div>
+            </Modal.Footer>
+          </form>
+        )}
+      </Modal>
+    </UserProvider>
   );
 };
 

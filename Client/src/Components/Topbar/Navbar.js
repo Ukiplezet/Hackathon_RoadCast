@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
@@ -11,9 +11,11 @@ import { Link, useHistory } from "react-router-dom";
 import "../../Layout/Navbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "../../Pages/Login";
+import { UserContext } from "../../Context/AuthContext";
 
 function Navbar() {
   const history = useHistory();
+  const { user, login, logout, setUser } = useContext(UserContext);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -40,14 +42,14 @@ function Navbar() {
         ></FontAwesomeIcon>
 
         <img
-          style={{ height: "40px" }}
+          style={{ height: "30px" }}
           src="https://www.howtogeek.com/wp-content/uploads/2018/10/preview-12.png?width=1198&trim=1,1&bg-color=000&pad=1,1"
           alt="Logo"
           className="text-light"
         />
       </div>
 
-      {false ? (
+      {user.auth ? (
         <>
           <div>
             <input className="rounded-pill me-2" style={{ width: "550px" }} />
@@ -59,35 +61,29 @@ function Navbar() {
           </div>
           <div className="d-flex flex-row ">
             <img
-              className="rounded me-3"
+              className="rounded me-3 mt-2"
               src="https://www.placecage.com/30/30"
+              style={{ height: "30px" }}
             />
-            <span className="me-5 mt-2 fs-6">UserName</span>
-            <div
-              className="d-flex pt-1 flex-row"
-              onClick={(e) => {
-                e.preventDefault();
-                openModalHandler();
-              }}
-            >
+            <span className="me-5 mt-2 pt-1 fs-6">UserName</span>
+            <div className="d-flex pt-1 flex-row">
               <FontAwesomeIcon
                 icon={faSignOutAlt}
                 onClick={(e) => {
-                  e.preventDefault();
-                  openModalHandler();
+                  history.push("/");
+                  logout();
+                  localStorage.clear();
                 }}
                 style={{ cursor: "pointer" }}
-                className="me-2 mt-2 text-light"
+                className="me-5 mt-2 text-light"
               ></FontAwesomeIcon>
-              <p style={{ cursor: "pointer" }} className="me-5  text-light">
-                LogOut
-              </p>
             </div>
           </div>
         </>
       ) : (
         <div
-          className="d-flex flex-row  pt-1 "
+          className="d-flex flex-rownowrap  pt-1 "
+          style={{ cursor: "pointer" }}
           onClick={(e) => {
             e.preventDefault();
             openModalHandler();
@@ -95,12 +91,9 @@ function Navbar() {
         >
           <FontAwesomeIcon
             icon={faSignInAlt}
-            style={{ cursor: "pointer" }}
             className="me-2 mt-2 text-light"
           ></FontAwesomeIcon>
-          <p style={{ cursor: "pointer" }} className="me-5  text-light">
-            Login
-          </p>
+          <p className="me-5  text-light">Login</p>
         </div>
       )}
       <Login modalOpen={modalOpen} handleModalOpen={openModalHandler} />
