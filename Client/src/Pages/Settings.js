@@ -43,7 +43,12 @@ export default function settings() {
           <Row sm="10" className="d-flex flex-row justify-content-end">
             <Form.Label row sm="2" className=" d-flex justify-content-between">
               <p className="fs-6">Allow playback of explicit-rated content</p>
-              <Form.Check type="switch" id="custom-switch" label="" />
+              <Form.Check
+                checked={false}
+                type="switch"
+                id="custom-switch"
+                label=""
+              />
             </Form.Label>
           </Row>
         </Form.Group>
@@ -61,7 +66,12 @@ export default function settings() {
               <p className="fs-6">
                 Autoplay similiar podcasts when your podcast ends in this app
               </p>
-              <Form.Check type="switch" id="custom-switch" label="" />
+              <Form.Check
+                checked={true}
+                type="switch"
+                id="custom-switch"
+                label=""
+              />
             </Form.Label>
           </Row>
         </Form.Group>
@@ -89,7 +99,7 @@ export default function settings() {
             </Form.Label>
           </Row>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="success" type="submit">
           Submit
         </Button>
       </Form>

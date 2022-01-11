@@ -64,10 +64,11 @@ const Login = (props) => {
         password,
       });
       if (response.role === "admin") {
-        await settingLoggedUserContext(response);
+        settingLoggedUserContext(response);
         const loggedId = response._id;
         props.handleModalOpen();
-        history.push(`/${loggedId}`);
+        history.push(`/adminpanel/${loggedId}`);
+        alert("admin logged in");
       } else {
         await settingLoggedUserContext(response);
         const loggedId = response._id;
@@ -111,7 +112,6 @@ const Login = (props) => {
     login(loggedUser);
     localStorage.setItem("token", loggedUser.token);
     localStorage.setItem("id", loggedUser._id);
-
     return setUser(loggedUser);
   };
 

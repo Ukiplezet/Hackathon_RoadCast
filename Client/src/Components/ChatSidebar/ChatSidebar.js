@@ -46,7 +46,7 @@ function ChatSidebar() {
         />
 
         <button
-          className="rounded bg-primary border-0"
+          className="rounded bg-success border-0"
           type="submit"
           disabled={!formValue}
         >

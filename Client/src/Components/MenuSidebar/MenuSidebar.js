@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Container } from "react-bootstrap";
@@ -16,10 +16,14 @@ import {
   faHeadphonesAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../Layout/SideManu.css";
+
 function MenuSidebar() {
   const history = useHistory();
   const { user } = useContext(UserContext);
-
+  let userId = "";
+  useEffect(() => {
+    userId = localStorage.getItem("id");
+  }, []);
   return (
     <Col className="user-side-menu mt-3 mx-1 " xs={1} md={2} lg={2}>
       <img
@@ -40,7 +44,7 @@ function MenuSidebar() {
               href="/"
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/${user._id}`);
+                history.push(`/${userId}`);
               }}
             >
               <FontAwesomeIcon icon={faHome} className="me-2" />
@@ -55,7 +59,7 @@ function MenuSidebar() {
               href="/listeningnow"
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/listeningnow/${user._id}`);
+                history.push(`/listeningnow/${userId}`);
               }}
             >
               <FontAwesomeIcon icon={faHeadphonesAlt} className="me-2" />
@@ -70,7 +74,7 @@ function MenuSidebar() {
               href="/map"
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/map/${user._id}`);
+                history.push(`/map/${userId}`);
               }}
             >
               <FontAwesomeIcon icon={faMapMarkedAlt} className="me-2" />
@@ -86,7 +90,7 @@ function MenuSidebar() {
               href="/friendslist"
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/friendslist/${user._id}`);
+                history.push(`/friendslist/${userId}`);
               }}
             >
               <FontAwesomeIcon icon={faUserFriends} className="me-2" />
@@ -101,7 +105,7 @@ function MenuSidebar() {
               href="/discover"
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/discover/${user._id}`);
+                history.push(`/discover/${userId}`);
               }}
             >
               <FontAwesomeIcon
@@ -120,7 +124,7 @@ function MenuSidebar() {
               href="/savedpodcasts"
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/savedpodcasts/${user._id}`);
+                history.push(`/savedpodcasts/${userId}`);
               }}
             >
               <FontAwesomeIcon
@@ -139,7 +143,7 @@ function MenuSidebar() {
               href="/userprofile"
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/userprofile/${user._id}`);
+                history.push(`/userprofile/${userId}`);
               }}
             >
               <FontAwesomeIcon icon={faUserCircle} className="me-2" />
@@ -154,7 +158,7 @@ function MenuSidebar() {
               href="/settings"
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/settings/${user._id}`);
+                history.push(`/settings/${userId}`);
               }}
             >
               <FontAwesomeIcon
