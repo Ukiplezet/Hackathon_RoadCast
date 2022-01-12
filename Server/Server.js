@@ -19,7 +19,7 @@ mongoose.connect(
   }
 );
 
-// app.use("/search", require("./Routes/SearchInDB"));
+app.use("/search", require("./Routes/SearchInDBRoute"));
 app.use("/user", require("./Routes/UsersRoute"));
 app.use("/", require("./Routes/LoginSignupRoute"));
 app.listen(port, () => {
