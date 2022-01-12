@@ -4,64 +4,22 @@ import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDi
 import * as tt from "@tomtom-international/web-sdk-maps";
 import * as ttapi from "@tomtom-international/web-sdk-services";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
+import { convertToPoints, drawRoute, addDestination } from "../Utils/mapFuncs";
 import GpsArrow from "../media/gps-arrow-orange.png"
 
 function Map() {
-  const API_KEY = "hAVhyF48FrhhYeWA6HoGG7AORll1v9gU"
   const mapEl = useRef()
   const [map, setMap] = useState({})
   const [routeInfo, setRouteInfo] = useState({});
   const [latitude, setLatitude] = useState(32.052797); // set to current location
   const [longitude, setLongitude] = useState(34.772238);
 
-  const convertToPoints = (lngLat) => {
-    return { 
-      point: {
-        latitude: lngLat.lat,
-        longitude: lngLat.lng
-      }
-    }
-  }
-
-  const drawRoute = (geoJson, map) => {
-    if (map.getLayer("route")) {
-      map.removeLayer("route")
-      map.removeSource("route");
-    }
-    map.addLayer({
-      id: "route",
-      type: "line",
-      source: {
-        type: "geojson",
-        data: geoJson,
-      },
-      paint: {
-        "line-color": "#F28830",
-        "line-width": 6,
-      },
-    });
-  }
-
-
-  const addDestination = (lngLat, map) => {
-    const stop = document.createElement("div");
-    stop.className = "destination";
-
-    new tt.Marker({ element: stop })
-     .setLngLat(lngLat)
-     .addTo(map);
-  };
-
   useEffect(() => {
-
-    const origin = {
-      lng: longitude,
-      lat: latitude,
-    }
+    const origin = { lng: longitude, lat: latitude }
     const destinations = [];
 
     let tomtomMap = tt.map({
-        key: API_KEY,
+        key: process.env.REACT_APP_TOMTOM_API_KEY,
         container: mapEl.current,
         stylesVisibility: {
           trafficIncidents: true,
@@ -104,7 +62,7 @@ function Map() {
       })
 
       const callParams = {
-        key: API_KEY,
+        key: process.env.REACT_APP_TOMTOM_API_KEY,
         destinations: destinationPoints,
         origins: [convertToPoints(origin)],
       };
@@ -135,7 +93,7 @@ function Map() {
       .then((sorted) => {
         sorted.unshift(origin)
         ttapi.services.calculateRoute({
-          key: API_KEY,
+          key: process.env.REACT_APP_TOMTOM_API_KEY,
           locations: sorted,
         })
         .then(routeData => {
@@ -154,7 +112,6 @@ function Map() {
 
     return () => tomtomMap.remove();
   }, [longitude, latitude])
-  console.log(routeInfo)
 
   return (
     <Col
