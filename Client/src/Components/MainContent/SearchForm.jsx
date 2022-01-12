@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./SearchForm";
-import axios from "axios";
+import api from "../../Utils/API";
 import { Button, Container } from "react-bootstrap";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -124,12 +124,14 @@ export default function SearchForm() {
       data[key] = value;
     }
     console.log(data);
+    const response = await api.findPodcastBasedOnSearchForm(data);
+    console.log(response);
   };
 
-  //should it be podcastCategory or podcastName? or somehow and if statement? If a user entered the name, give them that specific podcast
   const requestedData = listOfPodcasts.filter(
     (element) => element.podcastCategory === request
   );
+  //should it be podcastCategory or podcastName? or somehow and if statement? If a user entered the name, give them that specific podcast
 
   const scrollToPodcastList = () => {
     scroller.scrollTo("podcastCategory", {
@@ -233,8 +235,8 @@ export default function SearchForm() {
             variant="success"
             className="searchButton"
             // onClick={onSubmit}
-            onClick={() => {
-              handleSubmit();
+            onClick={(e) => {
+              handleSubmit(e);
               scrollToPodcastList();
             }}
             method="POST"
@@ -262,56 +264,3 @@ export default function SearchForm() {
     </>
   );
 }
-
-// ------------------------------------------------------------------------------------------------
-
-function PodcastCard(props) {
-  return (
-    <Card
-      className="podcastCard"
-      id="podcastList
-    podcastList"
-      sx={{ maxWidth: 345, maxHeight: 345 }}
-    >
-      <CardContent>
-        <img
-          src={`http://localhost:5500/${props.picture}`}
-          alt={props.podcastName}
-          variant="body2"
-          color="text.secondary"
-        />
-
-        <Typography paragraph color="text.secondary">
-          {props.podcastName}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.podcastDescription}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.podcastCategory}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          Episodes
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.date}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.episodeDescription}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.rating}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.length}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <Link to={"/listeningnow/:loggedId" + Number(props.id)}>Play</Link>
-        </IconButton>
-      </CardActions>
-    </Card>
-  );
-}
-
