@@ -47,6 +47,7 @@ export default {
 
   loginUser: async ({ email, password }) => {
     const response = await axios.post(`${BASE_URL}/login`, { email, password });
+    console.log(response.data);
     return response.data;
   },
 
@@ -63,20 +64,7 @@ export default {
 
   findPodcastBasedOnSearchForm: async (data) => {
     const userId = localStorage.getItem("id");
-    const token = localStorage.getItem("token");
-    const response = await axios.post(
-      `${BASE_URL}/search/${userId}`,
-      {
-        userId,
-        data,
-        token,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post(`${BASE_URL}/search/${userId}`, { data });
     console.log(response);
     return response.data;
   },

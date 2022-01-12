@@ -24,6 +24,7 @@ export default function UserProfile() {
   const openEditUserModal = () => {
     if (!editUserModal) {
       setEditUserModal(true);
+      
     } else {
       setEditUserModal(false);
     }
@@ -40,16 +41,16 @@ export default function UserProfile() {
     setFirstRender(false);
   };
 
-  useEffect(() => {
-    if (firstRender) {
-      const fetchUserData = () => {
-        const userId = user._id;
-        getUpdatedUserData(userId);
-        setFirstRender(false);
-      };
-      fetchUserData();
-    }
-  }, [firstRender]);
+  // useEffect(() => {
+  //   if (firstRender) {
+  //     const fetchUserData = () => {
+  //       const userId = user._id;
+  //       getUpdatedUserData(userId);
+  //       setFirstRender(false);
+  //     };
+  //     fetchUserData();
+  //   }
+  // }, [firstRender]);
   return (
     <Col
       xs={10}
