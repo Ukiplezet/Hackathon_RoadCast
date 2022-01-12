@@ -97,7 +97,7 @@ const Home = () => {
         <h1>RoadCast,</h1>
         <h2> A novel commute to work</h2>
         <h3>Find podcasts that suit your length of commute</h3>
-        <h3>Please login to plan your trip</h3>
+        <h3>Please login to start your trip</h3>
         <Col className="d-flex justify-content-center">
           <iframe
             src="https://giphy.com/embed/2DMWjDy699m0jdCYig"

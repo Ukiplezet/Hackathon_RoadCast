@@ -5,10 +5,12 @@ import close from "./red-x.svg";
 import "./RowPost.css";
 import ShowTrailer from "./ShowTrailer";
 import "bootstrap/dist/css/bootstrap.min.css";
+import PodcastModal from "../PodcastData/PodcastModal";
 
 function RowPost({ title, isSmall, api }) {
   const [movies, setMovies] = useState([]);
   const [videoKey, setVideoKey] = useState();
+  const [podcastModal, setPodcastModal] = useState(false);
   useEffect(() => {
     Axios.get(api)
       .then((response) => {
@@ -48,17 +50,25 @@ function RowPost({ title, isSmall, api }) {
     setVideoKey(undefined);
   };
 
+  const openPodcastModal = () => {
+    if (!podcastModal) {
+      setPodcastModal(true);
+    } else {
+      setPodcastModal(false);
+    }
+  };
+
   return (
     <>
-      <div className="row w-75 d-flex" onClick={handleShow}>
+      <div className="row w-75 d-flex" onClick={openPodcastModal}>
         <h5 class="text-start my-1">{title}</h5>
 
-        <div className="posters" onClick={handleShow}>
+        <div className="posters" onClick={openPodcastModal}>
           {movies && display}{" "}
         </div>
         <div
           className={videoKey ? "close-icon" : "hide-icon"}
-          onClick={handleShow}
+          onClick={openPodcastModal}
         >
           <img src={close} alt="close" />
         </div>
@@ -66,6 +76,10 @@ function RowPost({ title, isSmall, api }) {
       {/* <div className="show-container">
         {videoKey && <ShowTrailer videoKey={videoKey} />}
       </div> */}
+      <PodcastModal
+        HandleOpenPocastModal={openPodcastModal}
+        podcastModal={podcastModal}
+      />
     </>
   );
 }

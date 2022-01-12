@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-// import "../App.css";
+import "./SearchForm";
 import axios from "axios";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import { Button, Container } from "react-bootstrap";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -122,16 +121,16 @@ export default function SearchForm() {
   };
   return (
     <>
-      <Box className="d-flex justify-content-center mb-5">
+      <Container className="SearchFormBox d-flex justify-content-center mb-2 pe-5">
         <Card
-          className="searchPaper"
+          className="SearchFormBox searchPaper"
           elevation={3}
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            width: 450,
+            width: 800,
             height: 600,
             borderRadius: "2%",
             marginTop: "2rem",
@@ -212,7 +211,7 @@ export default function SearchForm() {
             onChange={podcastNameOnChange}
           />
           <Button
-            variant="contained"
+            variant="success"
             className="searchButton"
             // onClick={onSubmit}
             onClick={() => {
@@ -224,7 +223,7 @@ export default function SearchForm() {
             Find me a podcast
           </Button>
         </Card>
-      </Box>
+      </Container>
 
       {requestedData.map((element) => {
         return (

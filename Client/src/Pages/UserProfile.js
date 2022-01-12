@@ -20,6 +20,7 @@ export default function UserProfile() {
   const [bio, setBio] = useState("");
   const [editUserModal, setEditUserModal] = useState(false);
   const [firstRender, setFirstRender] = useState(false);
+  
   const openEditUserModal = () => {
     if (!editUserModal) {
       setEditUserModal(true);
