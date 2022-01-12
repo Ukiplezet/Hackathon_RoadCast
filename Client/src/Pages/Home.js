@@ -79,7 +79,7 @@ const Home = () => {
           <SearchForm />
           <RowPost
             className="mb-5 pb-5"
-            title="Here are your podcasts of interes:"
+            title="Here are your podcasts of interest:"
             isSmall={false}
             api={originals}
           />
