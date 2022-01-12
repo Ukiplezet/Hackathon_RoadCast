@@ -14,59 +14,16 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { scroller } from 'react-scroll';
+import { scroller } from "react-scroll";
 
 export default function SearchForm() {
   const [request, setRequest] = useState(false);
   const [startingPoint, setStartingPoint] = useState("");
   const [destination, setDestination] = useState("");
-  const [choosePodcast, setChoosePodcast] = useState([]);
+  const [podcastCategory, setPodcastCategory] = useState([]);
+  const [podcastName, setPodcastName] = useState([]);
   const [transportation, setTransportation] = useState("Car");
   const [listOfPodcasts, setListOfPodcasts] = useState([]);
-
-  const startingPointOnChange = (event) => {
-    setStartingPoint(event.target.value);
-  };
-
-  const destinationOnChange = (event) => {
-    setDestination(event.target.value);
-  };
-
-  const podcastOnChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setChoosePodcast(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  const transportationOnChange = (event) => {
-    setTransportation(event.target.value);
-  };
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5500/podcasts", {
-        headers: {
-          accessToken: localStorage.getItem("accessToken"),
-        },
-      })
-      .then((response) => {
-        setListOfPodcasts(response.data);
-        console.log(response.data);
-      });
-  }, []);
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setRequest(choosePodcast);
-  };
-
-  const requestedData = listOfPodcasts.filter(
-    (element) => element.choosePodcast === request
-  );
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -93,6 +50,61 @@ export default function SearchForm() {
     "Entertainment",
   ];
 
+  const startingPointOnChange = (event) => {
+    setStartingPoint(event.target.value);
+  };
+
+  const destinationOnChange = (event) => {
+    setDestination(event.target.value);
+  };
+
+  const podcastCategoryOnChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setPodcastCategory(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  const podcastNameOnChange = (event) => {
+    setPodcastName(event.target.value);
+  };
+
+  const transportationOnChange = (event) => {
+    setTransportation(event.target.value);
+  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5500/podcasts", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        setListOfPodcasts(response.data);
+        console.log(response.data);
+      });
+  }, []);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setRequest(podcastCategory);
+  };
+
+  //should it be choosePodcast or podcastCategory? or somehow and if statement? If a user entered the name, give them that specific podcast
+  const requestedData = listOfPodcasts.filter(
+    (element) => element.choosePodcast === request
+  );
+
+  const scrollToPodcastList = () => {
+    scroller.scrollTo("choosePodcast", {
+      smooth: true,
+      duration: 700,
+    });
+  };
   return (
     <>
       <Box>
@@ -105,7 +117,7 @@ export default function SearchForm() {
             justifyContent: "center",
             alignItems: "center",
             width: 450,
-            height: 500,
+            height: 600,
             borderRadius: "2%",
             marginTop: "2rem",
             marginLeft: "2rem",
@@ -155,28 +167,43 @@ export default function SearchForm() {
             <MenuItem value="I'll walk">I'll walk</MenuItem>
           </Select>
           <InputLabel className="searchForm" id="demo-simple-select-label">
-            Choose podcasts
+            Choose category
           </InputLabel>
           <Select
             style={{ width: "20rem" }}
             labelId="demo-multiple-name-label"
-            id="demo-multiple-name"
+            id="podcastCategory"
             multiple
-            value={choosePodcast}
-            onChange={podcastOnChange}
+            value={podcastCategory}
+            onChange={podcastCategoryOnChange}
             input={<OutlinedInput label="Podcast" />}
             MenuProps={MenuProps}
           >
-            {podcastOptions.map((choosePodcast) => (
-              <MenuItem key={choosePodcast} value={choosePodcast}>
-                {choosePodcast}
+            {podcastOptions.map((podcastCategory) => (
+              <MenuItem key={podcastCategory} value={podcastCategory}>
+                {podcastCategory}
               </MenuItem>
             ))}
           </Select>
+          <InputLabel className="searchForm" id="demo-simple-select-label">
+            Enter the name of a podcast (optional)
+          </InputLabel>
+          <TextField
+            style={{ width: "20rem" }}
+            className=""
+            id="podcastName"
+            label="Podcast Name"
+            value={podcastName}
+            onChange={podcastNameOnChange}
+          />
           <Button
             variant="contained"
             className="searchButton"
-            onClick={onSubmit}
+            // onClick={onSubmit}
+            onClick={() => {
+              onSubmit();
+              scrollToPodcastList();
+            }}
             method="POST"
           >
             Find me a podcast
@@ -188,10 +215,9 @@ export default function SearchForm() {
         return (
           <PodcastCard
             id={element.id}
+            podcastCategory={element.podcastCategory}
             podcastName={element.podcastName}
-            category={element.category}
             picture={element.picture}
-            title={element.title}
             podcastDescription={element.podcastDescription}
             episodeDescription={element.episodeDescription}
             date={element.date}
@@ -208,18 +234,20 @@ export default function SearchForm() {
 
 function PodcastCard(props) {
   return (
-    <Card className="podcastCard" sx={{ maxWidth: 345, maxHeight: 345 }}>
+    <Card
+      className="podcastCard"
+      id="podcastList
+    podcastList"
+      sx={{ maxWidth: 345, maxHeight: 345 }}
+    >
       <CardContent>
         <img
           src={`http://localhost:5500/${props.picture}`}
-          alt={props.title}
+          alt={props.podcastName}
           variant="body2"
           color="text.secondary"
         />
 
-        <Typography paragraph color="text.secondary">
-          {props.title}
-        </Typography>
         <Typography paragraph color="text.secondary">
           {props.podcastName}
         </Typography>
@@ -227,7 +255,7 @@ function PodcastCard(props) {
           {props.podcastDescription}
         </Typography>
         <Typography paragraph color="text.secondary">
-          {props.category}
+          {props.podcastCategory}
         </Typography>
         <Typography paragraph color="text.secondary">
           Episodes
