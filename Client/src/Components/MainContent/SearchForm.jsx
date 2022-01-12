@@ -14,7 +14,6 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { scroller } from "react-scroll";
-// import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function SearchForm() {
   const [request, setRequest] = useState(false);
@@ -52,42 +51,32 @@ export default function SearchForm() {
 
   const startingPointOnChange = (event) => {
     setStartingPoint(event.target.value);
+    console.log(event.target.value);
   };
 
   const destinationOnChange = (event) => {
     setDestination(event.target.value);
+    console.log(event.target.value);
   };
 
   const podcastCategoryOnChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPodcastCategory(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setPodcastCategory(typeof value === "string" ? value.split(",") : value);
+    console.log(event.target.value);
   };
 
   const podcastNameOnChange = (event) => {
     setPodcastName(event.target.value);
+    console.log(event.target.value);
   };
 
   const transportationOnChange = (event) => {
     setTransportation(event.target.value);
+    console.log(event.target.value);
   };
-  // probably will ned to change the endpoint later
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5500/podcasts", {
-  //       headers: {
-  //         accessToken: localStorage.getItem("accessToken"),
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setListOfPodcasts(response.data);
-  //       console.log(response.data);
-  //     });
-  // }, []);
+
   // // probably will need to change the endpoint later
   // useEffect(() => {
   //   axios
@@ -103,9 +92,28 @@ export default function SearchForm() {
   // }, []);
 
   // not sure setRequest is the right choice here
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setRequest(podcastCategory);
+
+    const formData = new FormData();
+
+    formData.append("startingPoint", startingPoint);
+    formData.append("destination", destination);
+    formData.append("podcastCategory", podcastCategory);
+    formData.append("transportation", transportation);
+    formData.append("podcastName", podcastName);
+
+    // await axios
+    //   .get("http://localhost:3001/podcasts", formData, {})
+    //   .then((response) => {
+    //     setListOfPodcasts(response.data);
+    //   });
+    const data = {};
+    for (let field of formData) {
+      const [key, value] = field;
+      data[key] = value;
+    }
+    console.log(data);
   };
 
   //should it be podcastCategory or podcastName? or somehow and if statement? If a user entered the name, give them that specific podcast
@@ -215,7 +223,7 @@ export default function SearchForm() {
             className="searchButton"
             // onClick={onSubmit}
             onClick={() => {
-              onSubmit();
+              handleSubmit();
               scrollToPodcastList();
             }}
             method="POST"

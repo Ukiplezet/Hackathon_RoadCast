@@ -61,7 +61,7 @@ function RowPost({ title, isSmall, api }) {
   return (
     <>
       <div className="row w-75 d-flex" onClick={openPodcastModal}>
-        <h5 class="text-start my-1">{title}</h5>
+        <h5 className="text-start my-1">{title}</h5>
 
         <div className="posters" onClick={openPodcastModal}>
           {movies && display}{" "}

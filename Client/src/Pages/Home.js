@@ -104,7 +104,7 @@ const Home = () => {
             width="700"
             height="250"
             frameBorder="0"
-            //   class="giphy-embed"
+            //   className="giphy-embed"
             //   allowFullScreen
           ></iframe>
           {/* <Button
