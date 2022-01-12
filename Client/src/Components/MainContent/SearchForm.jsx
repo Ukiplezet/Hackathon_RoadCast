@@ -16,6 +16,16 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { scroller } from "react-scroll";
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 
+// {
+//   FormData: {
+//       startingPoint: "hadera",
+//       destination: "tel aviv",
+//       podcastCategory: ["politics", "health", "enviroment"],
+//       podcastName: "Omri Sucks bad", //(OPTIONAL)
+//       transportation: "bus",
+//   }
+// }
+
 export default function SearchForm() {
   const [request, setRequest] = useState(false);
   const [startingPoint, setStartingPoint] = useState("");
@@ -119,6 +129,7 @@ export default function SearchForm() {
       duration: 700,
     });
   };
+
   return (
     <>
       <Container className="SearchFormBox d-flex justify-content-center mb-2 pe-5">
@@ -295,3 +306,4 @@ function PodcastCard(props) {
     </Card>
   );
 }
+

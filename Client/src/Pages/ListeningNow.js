@@ -8,7 +8,7 @@ import PodcastCard from "../Components/PodcastData/PodcastCard";
 function CenterContent() {
   return (
     <Col
-      className="center-content shadow-lg pt-2 text-white"
+      className="center-content shadow-lg py-2 text-white"
       xs={10}
       md={8}
       lg={7}

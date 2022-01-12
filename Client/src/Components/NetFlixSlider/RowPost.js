@@ -24,13 +24,11 @@ function RowPost({ title, isSmall, api }) {
   const handleMovieClick = (item) => {
     Axios.get(`${baseUrl}/movie/${item.id}/videos?api_key=${API_KEY}`)
       .then((response) => {
-        console.log(response.data);
         let videoData = response.data.results[0];
-        console.log(videoData);
         setVideoKey(videoData.key);
       })
       .catch((err) => {
-        alert("Video is not found..,Please choose another Movie...");
+        console.log("Video is not found..,Please choose another Movie...");
       });
 
     console.log(videoKey);
