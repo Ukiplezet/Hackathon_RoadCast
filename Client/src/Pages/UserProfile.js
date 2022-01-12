@@ -18,7 +18,7 @@ export default function UserProfile() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [bio, setBio] = useState("");
   const [editUserModal, setEditUserModal] = useState(false);
-  const [firstRender, setFirstRender] = useState(true);
+  const [firstRender, setFirstRender] = useState(false);
   const openEditUserModal = () => {
     if (!editUserModal) {
       setEditUserModal(true);
@@ -29,7 +29,6 @@ export default function UserProfile() {
 
   const getUpdatedUserData = async (userId) => {
     const response = await api.getUserById(userId);
-    console.log(response);
     setUser(response);
     setFirstName(response.firstName);
     setLastName(response.lastName);
@@ -42,7 +41,7 @@ export default function UserProfile() {
   useEffect(() => {
     if (firstRender) {
       const fetchUserData = () => {
-        const userId = localStorage.getItem("id");
+        const userId = user._id;
         getUpdatedUserData(userId);
         setFirstRender(false);
       };

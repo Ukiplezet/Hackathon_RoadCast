@@ -41,7 +41,6 @@ export default function EditUserModal(props) {
       alert("password doesnt match!");
     }
   };
-
   return (
     <Modal
       show={props.editUserModal}

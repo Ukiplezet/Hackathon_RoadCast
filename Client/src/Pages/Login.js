@@ -54,20 +54,20 @@ const Login = (props) => {
     setLocalStorage();
   };
 
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = async (e, email, password) => {
     e.stopPropagation();
     e.preventDefault();
-
     try {
       const response = await api.loginUser({
         email,
         password,
       });
       if (response.role === "admin") {
-        await settingLoggedUserContext(response);
+        settingLoggedUserContext(response);
         const loggedId = response._id;
         props.handleModalOpen();
-        history.push(`/${loggedId}`);
+        history.push(`/adminpanel/${loggedId}`);
+        alert("admin logged in");
       } else {
         await settingLoggedUserContext(response);
         const loggedId = response._id;
@@ -111,7 +111,6 @@ const Login = (props) => {
     login(loggedUser);
     localStorage.setItem("token", loggedUser.token);
     localStorage.setItem("id", loggedUser._id);
-
     return setUser(loggedUser);
   };
 
@@ -122,8 +121,8 @@ const Login = (props) => {
         {!registerView ? (
           <form
             className=" w-1/2 flex flex-col"
-            onSubmit={(e, email) => {
-              handleLoginSubmit(e, email);
+            onSubmit={(e) => {
+              handleLoginSubmit(e, email, password);
               setRegisterView(false);
             }}
           >
@@ -133,7 +132,9 @@ const Login = (props) => {
             <Modal.Body className="">
               <label className=" ">Email:</label>
               <Form.Control
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 name="email"
                 className=""
                 type="email"

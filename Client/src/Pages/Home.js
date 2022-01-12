@@ -1,15 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import "../Layout/MainContainer.css";
 import { UserContext } from "../Context/AuthContext";
+import { Link, useHistory } from "react-router-dom";
 import Login from "./Login";
+<<<<<<< HEAD
 import SearchForm from "../Components/MainContent/SearchForm";
+=======
+import api from "../Utils/API";
+>>>>>>> m2
 
 const Home = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser, logout } = useContext(UserContext);
   const [modalOpen, setModalOpen] = useState(false);
-
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const history = useHistory();
+  const date = new Date();
   const openModalHandler = () => {
     if (!modalOpen) {
       setModalOpen(true);
@@ -17,6 +25,46 @@ const Home = () => {
       setModalOpen(false);
     }
   };
+  const getUpdatedUserData = async (userId) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      userId = user._id;
+      const response = await api.getUserById(userId);
+      console.log(`1`, response);
+      setUser(response);
+      setFirstName(response.firstName);
+      setLastName(response.lastName);
+      history.push(`/${response._id}`);
+    }
+  };
+  
+  const setLocalStorage = () => {
+    const hours = 1;
+    const now = new Date().getTime();
+    const setupTime = localStorage.getItem("setupTime");
+    if (setupTime == null) {
+      localStorage.setItem("setupTime", now);
+    } else {
+      if (now - setupTime > hours * 60 * 60 * 1000) {
+        localStorage.clear();
+        logout(user);
+        localStorage.setItem("setupTime", now);
+        history.push("/");
+      }
+    }
+  };
+  useEffect(() => {
+    try {
+      async function getUserData() {
+        const userId = localStorage.getItem("id");
+        await getUpdatedUserData(userId);
+        setLocalStorage();
+      }
+      getUserData();
+    } catch (err) {
+      return err.message;
+    }
+  }, []);
 
   if (user.auth) {
     return (

@@ -29,7 +29,6 @@ function ChatSidebar() {
           icon={faAngleLeft}
           style={{ cursor: "pointer" }}
           className="me-4 text-light"
-          size="md"
         ></FontAwesomeIcon>
         Chatting with: @user123
       </div>
@@ -46,7 +45,7 @@ function ChatSidebar() {
         />
 
         <button
-          className="rounded bg-primary border-0"
+          className="rounded bg-success border-0"
           type="submit"
           disabled={!formValue}
         >

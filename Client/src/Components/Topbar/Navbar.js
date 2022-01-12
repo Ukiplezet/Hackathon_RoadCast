@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
@@ -12,13 +12,15 @@ import "../../Layout/Navbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "../../Pages/Login";
 import { UserContext } from "../../Context/AuthContext";
+import api from "../../Utils/API";
 
 function Navbar() {
   const history = useHistory();
   const { user, login, logout, setUser } = useContext(UserContext);
 
   const [modalOpen, setModalOpen] = useState(false);
-
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const openModalHandler = () => {
     if (!modalOpen) {
       setModalOpen(true);
@@ -26,6 +28,31 @@ function Navbar() {
       setModalOpen(false);
     }
   };
+
+  const getUpdatedUserData = async (userId) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      userId = user._id;
+      const response = await api.getUserById(userId);
+      console.log(`1`, response);
+      setUser(response);
+      setFirstName(response.firstName);
+      setLastName(response.lastName);
+      history.push(`/${response._id}`);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      async function getUserData() {
+        const userId = localStorage.getItem("id");
+        await getUpdatedUserData(userId);
+      }
+      getUserData();
+    } catch (err) {
+      return err.message;
+    }
+  }, []);
 
   return (
     <div className="navbar shadow-lg d-flex flex-row justify-content-between">
