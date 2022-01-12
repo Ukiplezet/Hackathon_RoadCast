@@ -5,11 +5,8 @@ import "../Layout/MainContainer.css";
 import { UserContext } from "../Context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import Login from "./Login";
-<<<<<<< HEAD
 import SearchForm from "../Components/MainContent/SearchForm";
-=======
 import api from "../Utils/API";
->>>>>>> m2
 
 const Home = () => {
   const { user, setUser, logout } = useContext(UserContext);
