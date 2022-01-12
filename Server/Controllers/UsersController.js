@@ -43,6 +43,7 @@ async function signupController(req, res) {
     return err.message;
   }
 }
+
 async function updateUserController(req, res) {
   const userData = { ...req.body };
   try {
