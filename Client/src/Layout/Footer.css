@@ -1,7 +1,7 @@
 footer {
   background-color: #2e3646;
   border-top: 45px solid #343338;
-  padding: 1vh;
+  z-index: 2000;
 }
 
 footer nav ul {
@@ -9,5 +9,3 @@ footer nav ul {
   justify-content: center;
   align-items: center;
 }
-
-

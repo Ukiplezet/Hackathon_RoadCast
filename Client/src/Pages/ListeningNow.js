@@ -3,21 +3,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Container, Row } from "react-bootstrap";
 import AudioPlayer from "react-audio-element";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
+import PodcastCard from "../Components/PodcastData/PodcastCard";
 
 function CenterContent() {
   return (
     <Col
-      className="center-content shadow-lg pt-2 text-white"
+      className="center-content shadow-lg py-2 text-white"
       xs={10}
       md={8}
       lg={7}
     >
       <OnHoverScrollContainer>
-        <h1>Show data regarding the selected podcast</h1>
         <Row className="audioDiv mx-4">
+          <PodcastCard />
           <AudioPlayer
             style={{ cursor: "pointer" }}
-            className="mt-2"
+            className=""
             src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
             overrideStyles={true}
             showHours={true}

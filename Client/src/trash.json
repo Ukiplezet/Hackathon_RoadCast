@@ -1,0 +1,16 @@
+{ 
+    "id":_id,
+    "podcastCategory":element.podcastCategory,
+    "podcastName":element.podcastName,
+            "picture":element.picture,
+
+            "podcastDescription":element.podcastDescription,
+
+            "episodeDescription":element.episodeDescription,
+
+            "date":element.date,
+
+            "length":element.length,
+
+            "rating":element.rating,
+}

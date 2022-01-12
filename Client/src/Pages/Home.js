@@ -7,6 +7,8 @@ import { Link, useHistory } from "react-router-dom";
 import Login from "./Login";
 import SearchForm from "../Components/MainContent/SearchForm";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
+import RowPost from "../Components/NetFlixSlider/RowPost";
+import { originals } from "../Components/constants/urls";
 import api from "../Utils/API";
 
 const Home = () => {
@@ -51,66 +53,72 @@ const Home = () => {
       }
     }
   };
-  useEffect(() => {
-    try {
-      async function getUserData() {
-        const userId = localStorage.getItem("id");
-        await getUpdatedUserData(userId);
-        setLocalStorage();
-      }
-      getUserData();
-    } catch (err) {
-      return err.message;
-    }
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     async function getUserData() {
+  //       const userId = localStorage.getItem("id");
+  //       await getUpdatedUserData(userId);
+  //       setLocalStorage();
+  //     }
+  //     getUserData();
+  //   } catch (err) {
+  //     return err.message;
+  //   }
+  // }, []);
 
   if (user.auth) {
     return (
       <Col
-        className="center-content shadow-lg pt-2 text-white"
+        className="center-content shadow-lg pt-2 text-white "
         xs={10}
         md={8}
         lg={7}
       >
         <OnHoverScrollContainer>
-          <h1>Plan you commute with style and at ease</h1>
+          <h1>Let's find some podcasts.</h1>
           <SearchForm />
+          <RowPost
+            className="mb-5 pb-5"
+            title="Here are your podcasts of interest:"
+            isSmall={false}
+            api={originals}
+          />
         </OnHoverScrollContainer>
       </Col>
     );
   } else {
     return (
-      <Col
-        className="center-content shadow-lg pt-2 text-white"
+      <Row
+        className="center-content shadow-lg pt-2 text-white d-flex justify-content-center"
         xs={12}
         md={12}
         lg={12}
       >
-        <OnHoverScrollContainer>
-          <h1>Hey there, Welcome to the best commute app EVA!</h1>
-          <h3>Please login to plan your trip</h3>
-          <Row className="d-flex justify-content-center">
-            <iframe
-              src="https://giphy.com/embed/2DMWjDy699m0jdCYig"
-              width="700"
-              height="250"
-              frameBorder="0"
-              //   class="giphy-embed"
-              //   allowFullScreen
-            ></iframe>
-            <Button
-              className="w-25 mt-3"
-              onClick={(e) => {
-                e.preventDefault();
-                openModalHandler();
-              }}
-            >
-              Login
-            </Button>
-          </Row>
-        </OnHoverScrollContainer>
+        <h1>RoadCast,</h1>
+        <h2> A novel commute to work</h2>
+        <h3>Find podcasts that suit your length of commute</h3>
+        <h3>Please login to start your trip</h3>
+        <Col className="d-flex justify-content-center">
+          <iframe
+            src="https://giphy.com/embed/2DMWjDy699m0jdCYig"
+            width="700"
+            height="250"
+            frameBorder="0"
+            //   className="giphy-embed"
+            //   allowFullScreen
+          ></iframe>
+          {/* <Button
+            className="w-25 mt-3"
+            onClick={(e) => {
+              e.preventDefault();
+              openModalHandler();
+            }}
+          >
+            Login
+          </Button> */}
+        </Col>
         <Login modalOpen={modalOpen} handleModalOpen={openModalHandler} />
-      </Col>
+      </Row>
     );
   }
 };

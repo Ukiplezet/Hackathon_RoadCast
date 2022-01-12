@@ -34,14 +34,15 @@
 .show-container {
   height: 100%;
   width: 100%;
+  border: 2px solid red;
 }
 
-/* .show-trailer{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform:translate(-50%,-50%);
-} */
+.show-trailer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .close-icon {
   position: relative;
   left: 3%;
@@ -54,4 +55,7 @@
 }
 .hide-icon {
   display: none;
+}
+.title-header {
+  float: left;
 }
