@@ -20,11 +20,15 @@ export default function Discover() {
       lg={7}
     >
       <OnHoverScrollContainer>
-        <RowPost title="Netflix Originals" isSmall={true} api={originals} />
-        <RowPost title="Action Movies" isSmall={true} api={actions} />
-        <RowPost title="Romantic Movies" isSmall={true} api={romance} />
-        <RowPost title="Comedy Movies" isSmall={true} api={comedy} />
-        <RowPost title="Horror Movies" isSmall={true} api={horror} />
+        <RowPost title="You might also like" isSmall={true} api={originals} />
+        <RowPost title="Random Podcasts" isSmall={true} api={actions} />
+        <RowPost
+          title="Cannabis related podcasts"
+          isSmall={true}
+          api={romance}
+        />
+        <RowPost title="Javascript podcasts" isSmall={true} api={comedy} />
+        <RowPost title="Python podcasts" isSmall={true} api={horror} />
       </OnHoverScrollContainer>
     </Col>
   );

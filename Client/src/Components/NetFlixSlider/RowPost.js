@@ -4,6 +4,7 @@ import { imageUrl, baseUrl, API_KEY } from "../constants/constants";
 import close from "./red-x.svg";
 import "./RowPost.css";
 import ShowTrailer from "./ShowTrailer";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function RowPost({ title, isSmall, api }) {
   const [movies, setMovies] = useState([]);
@@ -49,8 +50,8 @@ function RowPost({ title, isSmall, api }) {
 
   return (
     <>
-      <div className="row w-75 " onClick={handleShow}>
-        <h2>{title}</h2>
+      <div className="row w-75 d-flex" onClick={handleShow}>
+        <h5 class="text-start my-1">{title}</h5>
 
         <div className="posters" onClick={handleShow}>
           {movies && display}{" "}
@@ -62,9 +63,9 @@ function RowPost({ title, isSmall, api }) {
           <img src={close} alt="close" />
         </div>
       </div>
-      <div className="show-container">
+      {/* <div className="show-container">
         {videoKey && <ShowTrailer videoKey={videoKey} />}
-      </div>
+      </div> */}
     </>
   );
 }

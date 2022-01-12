@@ -109,7 +109,7 @@ export default function SearchForm() {
   };
   return (
     <>
-      <Box>
+      <Box className="d-flex justify-content-center mb-5">
         <Card
           className="searchPaper"
           elevation={3}
