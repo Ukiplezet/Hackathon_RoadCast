@@ -28,14 +28,30 @@ function Navbar() {
       setModalOpen(false);
     }
   };
-  let userId = "";
+
+  const getUpdatedUserData = async (userId) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      userId = user._id;
+      const response = await api.getUserById(userId);
+      console.log(`1`, response);
+      setUser(response);
+      setFirstName(response.firstName);
+      setLastName(response.lastName);
+      history.push(`/${response._id}`);
+    }
+  };
+
   useEffect(() => {
-    userId = localStorage.getItem("id");
-    const response = api.getUserById(userId);
-    console.log(`1`, response);
-    // setUser(response);
-    setFirstName(response.firstName);
-    setLastName(response.lastName);
+    try {
+      async function getUserData() {
+        const userId = localStorage.getItem("id");
+        await getUpdatedUserData(userId);
+      }
+      getUserData();
+    } catch (err) {
+      return err.message;
+    }
   }, []);
 
   return (

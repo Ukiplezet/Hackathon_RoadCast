@@ -29,7 +29,6 @@ function ChatSidebar() {
           icon={faAngleLeft}
           style={{ cursor: "pointer" }}
           className="me-4 text-light"
-          size="md"
         ></FontAwesomeIcon>
         Chatting with: @user123
       </div>

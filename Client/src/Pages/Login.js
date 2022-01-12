@@ -54,10 +54,9 @@ const Login = (props) => {
     setLocalStorage();
   };
 
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = async (e, email, password) => {
     e.stopPropagation();
     e.preventDefault();
-
     try {
       const response = await api.loginUser({
         email,
@@ -122,8 +121,8 @@ const Login = (props) => {
         {!registerView ? (
           <form
             className=" w-1/2 flex flex-col"
-            onSubmit={(e, email) => {
-              handleLoginSubmit(e, email);
+            onSubmit={(e) => {
+              handleLoginSubmit(e, email, password);
               setRegisterView(false);
             }}
           >
@@ -133,7 +132,9 @@ const Login = (props) => {
             <Modal.Body className="">
               <label className=" ">Email:</label>
               <Form.Control
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 name="email"
                 className=""
                 type="email"

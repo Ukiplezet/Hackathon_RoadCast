@@ -33,6 +33,7 @@ const Home = () => {
       history.push(`/${response._id}`);
     }
   };
+  
   const setLocalStorage = () => {
     const hours = 1;
     const now = new Date().getTime();
@@ -59,7 +60,7 @@ const Home = () => {
     } catch (err) {
       return err.message;
     }
-  }, [user]);
+  }, []);
 
   if (user.auth) {
     return (
