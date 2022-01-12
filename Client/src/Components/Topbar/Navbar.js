@@ -12,13 +12,17 @@ import "../../Layout/Navbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "../../Pages/Login";
 import { UserContext } from "../../Context/AuthContext";
+import axios from "axios"
+
 
 function Navbar() {
   const history = useHistory();
   const { user, login, logout, setUser } = useContext(UserContext);
-
+  const [searchParam, setSearchParam] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+  
   const [modalOpen, setModalOpen] = useState(false);
-
+  
   const openModalHandler = () => {
     if (!modalOpen) {
       setModalOpen(true);
@@ -26,7 +30,11 @@ function Navbar() {
       setModalOpen(false);
     }
   };
-
+  
+  async function searchHandler() {
+  const response = await axios.get(`/api/search/${searchParam}`);
+  setSearchResults(response.data);
+  }
   return (
     <div className="navbar shadow-lg d-flex flex-row justify-content-between">
       <div>
@@ -34,7 +42,7 @@ function Navbar() {
           icon={faAngleLeft}
           style={{ cursor: "pointer" }}
           className="ms-4 mt-2 text-light"
-        ></FontAwesomeIcon>
+          ></FontAwesomeIcon>
         <FontAwesomeIcon
           icon={faAngleRight}
           style={{ cursor: "pointer" }}
@@ -52,11 +60,11 @@ function Navbar() {
       {user.auth ? (
         <>
           <div>
-            <input className="rounded-pill me-2" style={{ width: "550px" }} />
+            <input onChange={setSearchParam} className="rounded-pill me-2" style={{ width: "550px" }} />
             <FontAwesomeIcon
               icon={faSearch}
               style={{ cursor: "pointer" }}
-              className="me-5 mt-2 text-light"
+              className="me-5 mt-2 text-light" onClick={searchHandler}
             ></FontAwesomeIcon>
           </div>
           <div className="d-flex flex-row ">
