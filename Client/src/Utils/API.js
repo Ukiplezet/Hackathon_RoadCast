@@ -60,4 +60,11 @@ export default {
     });
     return response.data;
   },
+  
+  findPodcastBasedOnSearchForm: async (data) => {
+    const userId = localStorage.getItem("id");
+    const response = await axios.get(`${BASE_URL}/search/${userId}`, { data });
+    console.log(response);
+    return response.data;
+  },
 };
