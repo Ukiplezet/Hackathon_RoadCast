@@ -15,6 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { scroller } from "react-scroll";
+// import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function SearchForm() {
   const [request, setRequest] = useState(false);
