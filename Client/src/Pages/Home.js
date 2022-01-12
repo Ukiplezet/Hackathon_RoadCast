@@ -6,6 +6,7 @@ import { UserContext } from "../Context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import Login from "./Login";
 import SearchForm from "../Components/MainContent/SearchForm";
+import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 import api from "../Utils/API";
 
 const Home = () => {
@@ -34,7 +35,7 @@ const Home = () => {
       history.push(`/${response._id}`);
     }
   };
-  
+
   const setLocalStorage = () => {
     const hours = 1;
     const now = new Date().getTime();
@@ -71,19 +72,21 @@ const Home = () => {
         md={8}
         lg={7}
       >
-        <h1>Plan you commute with style and at ease</h1>
-        <SearchForm />
+        <OnHoverScrollContainer>
+          <h1>Plan you commute with style and at ease</h1>
+          <SearchForm />
+        </OnHoverScrollContainer>
       </Col>
     );
   } else {
     return (
-      <>
-        <Col
-          className="center-content shadow-lg pt-2 text-white"
-          xs={12}
-          md={12}
-          lg={12}
-        >
+      <Col
+        className="center-content shadow-lg pt-2 text-white"
+        xs={12}
+        md={12}
+        lg={12}
+      >
+        <OnHoverScrollContainer>
           <h1>Hey there, Welcome to the best commute app EVA!</h1>
           <h3>Please login to plan your trip</h3>
           <Row className="d-flex justify-content-center">
@@ -105,9 +108,9 @@ const Home = () => {
               Login
             </Button>
           </Row>
-        </Col>
+        </OnHoverScrollContainer>
         <Login modalOpen={modalOpen} handleModalOpen={openModalHandler} />
-      </>
+      </Col>
     );
   }
 };

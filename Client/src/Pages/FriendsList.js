@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Col, ListGroup } from "react-bootstrap";
+import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 
 export default function FriendsList() {
   return (
@@ -9,7 +10,9 @@ export default function FriendsList() {
       md={8}
       lg={7}
     >
-      This is the friends list of the friends of the user
+      <OnHoverScrollContainer>
+        This is the friends list of the friends of the user
+      </OnHoverScrollContainer>
     </Col>
   );
 }

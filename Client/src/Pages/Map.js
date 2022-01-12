@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Col, Container, ListGroup } from "react-bootstrap";
+import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 
 function Map() {
   return (
@@ -9,7 +10,10 @@ function Map() {
       md={8}
       lg={7}
     >
+      <OnHoverScrollContainer>
+        
       <Col>A map to show the user's live route to destination</Col>
+          </OnHoverScrollContainer>
     </Col>
   );
 }

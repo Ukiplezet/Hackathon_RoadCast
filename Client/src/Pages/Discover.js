@@ -9,6 +9,7 @@ import {
   originals,
   romance,
 } from "../Components/constants/urls";
+import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 
 export default function Discover() {
   return (
@@ -18,11 +19,13 @@ export default function Discover() {
       md={8}
       lg={7}
     >
-      <RowPost title="Netflix Originals" api={originals} />
-      <RowPost title="Action Movies" isSmall={true} api={actions} />
-      <RowPost title="Romantic Movies" api={romance} />
-      <RowPost title="Comedy Movies" isSmall={true} api={comedy} />
-      <RowPost title="Horror Movies" isSmall={true} api={horror} />
+      <OnHoverScrollContainer>
+        <RowPost title="Netflix Originals" isSmall={true} api={originals} />
+        <RowPost title="Action Movies" isSmall={true} api={actions} />
+        <RowPost title="Romantic Movies" isSmall={true} api={romance} />
+        <RowPost title="Comedy Movies" isSmall={true} api={comedy} />
+        <RowPost title="Horror Movies" isSmall={true} api={horror} />
+      </OnHoverScrollContainer>
     </Col>
   );
 }

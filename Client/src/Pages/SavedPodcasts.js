@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Col, ListGroup } from "react-bootstrap";
+import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 
 export default function SavedPodcasts() {
   return (
@@ -9,8 +10,10 @@ export default function SavedPodcasts() {
       md={8}
       lg={7}
     >
-      <h1> Here will be a list of the podcasts that the user saved. </h1>
-      <h3>(either to listen in the future, or unfinished)</h3>
+      <OnHoverScrollContainer>
+        <h1> Here will be a list of the podcasts that the user saved. </h1>
+        <h3>(either to listen in the future, or unfinished)</h3>
+      </OnHoverScrollContainer>
     </Col>
   );
 }
