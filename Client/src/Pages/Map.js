@@ -1,21 +1,65 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Col } from "react-bootstrap";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
-import tt from "@tomtom-international/web-sdk-maps";
+import * as tt from "@tomtom-international/web-sdk-maps";
 import * as ttapi from "@tomtom-international/web-sdk-services";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
-import { Card, Col, Container } from "react-bootstrap";
-// import { FaLocationArrow } from "react-icons/fa";
-// <HiLocationMarker />;
+import GpsArrow from "../media/gps-arrow-orange.png"
 
 function Map() {
   const API_KEY = "hAVhyF48FrhhYeWA6HoGG7AORll1v9gU"
-  const mapEl = useRef(null)
-  // const markerEl = useRef(null);
+  const mapEl = useRef()
   const [map, setMap] = useState({})
-  const [latitude, setLatitude] = useState(-26.195737);
-  const [longitude, setLongitude] = useState(28.08032);
+  const [routeInfo, setRouteInfo] = useState({});
+  const [latitude, setLatitude] = useState(32.052797); // set to current location
+  const [longitude, setLongitude] = useState(34.772238);
+
+  const convertToPoints = (lngLat) => {
+    return { 
+      point: {
+        latitude: lngLat.lat,
+        longitude: lngLat.lng
+      }
+    }
+  }
+
+  const drawRoute = (geoJson, map) => {
+    if (map.getLayer("route")) {
+      map.removeLayer("route")
+      map.removeSource("route");
+    }
+    map.addLayer({
+      id: "route",
+      type: "line",
+      source: {
+        type: "geojson",
+        data: geoJson,
+      },
+      paint: {
+        "line-color": "#F28830",
+        "line-width": 6,
+      },
+    });
+  }
+
+
+  const addDestination = (lngLat, map) => {
+    const stop = document.createElement("div");
+    stop.className = "destination";
+
+    new tt.Marker({ element: stop })
+     .setLngLat(lngLat)
+     .addTo(map);
+  };
 
   useEffect(() => {
+
+    const origin = {
+      lng: longitude,
+      lat: latitude,
+    }
+    const destinations = [];
+
     let tomtomMap = tt.map({
         key: API_KEY,
         container: mapEl.current,
@@ -24,17 +68,17 @@ function Map() {
           trafficFlow: true
         },
         center: [longitude, latitude],
-        zoom: 14
+        zoom: 15
     });
     setMap(tomtomMap);
 
     const addMarker = () => {
       // const popUpOffset = { bottom: [0, -25] }
-      // const popUp = new tt.Popup({ offset: popUpOffset }).setHTML("This is you!")
+      // const popUp = new tt.Popup({ offset: popUpOffset }).setHTML(<div style={{ color: "black"}}>"This is you!"</div>)
 
-      const pin = document.createElement("div")
+      const pin = document.createElement("div");
+      pin.innerHTML = `<img src=${GpsArrow} height="20px" width="25px"/>`;
       pin.className = "locationMarker";
-      // pin.textContent = <FaLocationArrow />
 
       const marker = new tt.Marker({
         draggable: true,
@@ -44,17 +88,73 @@ function Map() {
       .addTo(tomtomMap)
 
       marker.on("dragend", () => {
-        const newlnglat = marker.getLngLat()
-        setLongitude(newlnglat.lng)
-        setLatitude(newlnglat.lat);
+        const lngLat = marker.getLngLat()
+        setLongitude(lngLat.lng)
+        setLatitude(lngLat.lat);
       })
+
       // marker.setPopup(popUp).togglePopup()
     }
     addMarker()
 
-    return () => tomtomMap.remove();
 
+    const sortDestinations = (locations) => {
+      const destinationPoints = locations.map(destination => {
+        return convertToPoints(destination)
+      })
+
+      const callParams = {
+        key: API_KEY,
+        destinations: destinationPoints,
+        origins: [convertToPoints(origin)],
+      };
+
+      return new Promise((resolve, reject)=> {
+        ttapi.services.matrixRouting(callParams)
+        .then((matrixAPIResults) => {
+          const results = matrixAPIResults.matrix[0]
+          const resultsArr = results.map((result, index) => {
+            return {
+              location: locations[index],
+              drivingTime: result.response.routeSummary.travelTimeInSeconds,
+            }
+          });
+          resultsArr.sort((a, b) => {
+            return a.drivingTime - b.drivingTime
+          })
+          const sortedLocations = resultsArr.map(result => {
+            return result.location
+          })
+          resolve(sortedLocations)
+        })
+      })
+    }
+
+    const recalculateRoutes = () => {
+      sortDestinations(destinations)
+      .then((sorted) => {
+        sorted.unshift(origin)
+        ttapi.services.calculateRoute({
+          key: API_KEY,
+          locations: sorted,
+        })
+        .then(routeData => {
+          setRouteInfo(routeData.routes[0].summary)
+          const geoJson = routeData.toGeoJson()
+          drawRoute(geoJson, tomtomMap)
+        })
+      })
+    }
+
+    tomtomMap.on("click", (e) => {
+      destinations.push(e.lngLat);
+      addDestination(e.lngLat, tomtomMap);
+      recalculateRoutes()
+    });
+
+    return () => tomtomMap.remove();
   }, [longitude, latitude])
+  console.log(routeInfo)
 
   return (
     <Col
@@ -67,24 +167,23 @@ function Map() {
         <Col>Where to?</Col>
         
         {map && <>
-          <Col className="search-bar">
+          {/* <Col className="search-bar">
             <input
-              type="number"
+              type="text"
               id="latitude"
               className="latitude"
               placeholder="latitude"
               onChange={(e) => { setLatitude(e.target.value) }}
             />
             <input
-              type="number"
+              type="text"
               id="longitude"
               className="longitude"
               placeholder="longitude"
               onChange={(e) => { setLongitude(e.target.value) }}
             />
-          </Col>
-          <Col ref={mapEl} className="map" />
-          {/* <div ref={markerEl} className="marker"></div> */}
+          </Col> */}
+          <div ref={mapEl} className="map" />
         </>}
       </OnHoverScrollContainer>
     </Col>
