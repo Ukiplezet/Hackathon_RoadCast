@@ -37,7 +37,7 @@ export default function SearchForm() {
   };
 
   const podcastOptions = [
-    "News",
+    "Politics",
     "Society and Culture",
     "Comedy",
     "Health",
@@ -75,7 +75,7 @@ export default function SearchForm() {
   const transportationOnChange = (event) => {
     setTransportation(event.target.value);
   };
-
+  // probably will ned to change the endpoint later
   useEffect(() => {
     axios
       .get("http://localhost:5500/podcasts", {
@@ -89,18 +89,19 @@ export default function SearchForm() {
       });
   }, []);
 
+  // not sure setRequest is the right choice here
   const onSubmit = async (e) => {
     e.preventDefault();
     setRequest(podcastCategory);
   };
 
-  //should it be choosePodcast or podcastCategory? or somehow and if statement? If a user entered the name, give them that specific podcast
+  //should it be podcastCategory or podcastName? or somehow and if statement? If a user entered the name, give them that specific podcast
   const requestedData = listOfPodcasts.filter(
-    (element) => element.choosePodcast === request
+    (element) => element.podcastCategory === request
   );
 
   const scrollToPodcastList = () => {
-    scroller.scrollTo("choosePodcast", {
+    scroller.scrollTo("podcastCategory", {
       smooth: true,
       duration: 700,
     });
@@ -275,7 +276,7 @@ function PodcastCard(props) {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <Link to={"/listeningnow/" + Number(props.id)}>Play</Link>
+          <Link to={"/listeningnow/:loggedId" + Number(props.id)}>Play</Link>
         </IconButton>
       </CardActions>
     </Card>
