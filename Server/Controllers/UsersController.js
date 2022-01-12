@@ -64,7 +64,6 @@ async function getUserByIdController(req, res) {
     res.status(500).send(err);
   }
 }
-
 module.exports = {
   loginController,
   signupController,
