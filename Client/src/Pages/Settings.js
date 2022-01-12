@@ -1,39 +1,45 @@
 import React from "react";
 import { Card, Col, Row, Form, Button } from "react-bootstrap";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function settings() {
   return (
     <Col
-      className="center-content d-flex justify-content-center shadow-lg pt-2 text-white"
+      className="center-content  shadow-lg pt-2 text-white"
       xs={10}
       md={8}
       lg={7}
     >
       <OnHoverScrollContainer>
-        <Form className="w-75">
-          <h2 className=" ">Settings</h2>
-          <Form.Group as={Row} className="" controlId="formPlaintextEmail">
-            <Form.Label column sm="2">
-              <h5>Language</h5>
+        <Form className="w-75  justify-content-start">
+          <h2 class="text-right">Settings</h2>
+          <Form.Group
+            as={Row}
+            className="d-flex align-content-start mb-3"
+            controlId="formPlaintextEmail"
+          >
+            <Form.Label row sm="2">
+              <h5 className="d-flex flex-rownowrap">Language</h5>
             </Form.Label>
-            <Col sm="10" className="d-flex flex-row justify-content-end">
-              <Form.Select
-                className="ms-5  w-25 "
-                aria-label="Default select example"
+            <Row sm="10" className="d-flex flex-row justify-content-evenly">
+              <Form.Label
+                row
+                sm="2"
+                className=" d-flex justify-content-between"
               >
-                <option value="1">English(en)</option>
-                <option value="2">Hebrew(he)</option>
-                <option value="3">Deutsch(de)</option>
-                <option value="4">Italiano(it) </option>
-              </Form.Select>
-            </Col>
-            <Form.Label row sm="2" className=" d-flex">
-              <p className="fs-6">
-                Choose language - Changes will be applied after restarting the
-                app
-              </p>
-            </Form.Label>
+                <p className="fs-6">Choose language</p>
+                <Form.Select
+                  className="ms-5 w-25 "
+                  aria-label="Default select example"
+                >
+                  <option value="1">English(en)</option>
+                  <option value="2">Hebrew(he)</option>
+                  <option value="3">Deutsch(de)</option>
+                  <option value="4">Italiano(it) </option>
+                </Form.Select>
+              </Form.Label>
+            </Row>
           </Form.Group>
           <Form.Group
             as={Row}

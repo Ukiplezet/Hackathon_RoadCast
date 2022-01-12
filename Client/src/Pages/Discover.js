@@ -14,17 +14,24 @@ import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDi
 export default function Discover() {
   return (
     <Col
-      className="center-content shadow-lg pt-2 text-white"
+      className="center-content shadow-lg   text-white"
       xs={10}
       md={8}
       lg={7}
     >
       <OnHoverScrollContainer>
-        <RowPost title="Netflix Originals" isSmall={true} api={originals} />
-        <RowPost title="Action Movies" isSmall={true} api={actions} />
-        <RowPost title="Romantic Movies" isSmall={true} api={romance} />
-        <RowPost title="Comedy Movies" isSmall={true} api={comedy} />
-        <RowPost title="Horror Movies" isSmall={true} api={horror} />
+        <h1 className="my-3">Discover New &amp; Trending Podcasts</h1>
+        <h4>This is based on our talented Data-Science team</h4>
+        <h4> and our unique algorithm</h4>
+        <RowPost title="You might also like" isSmall={true} api={originals} />
+        <RowPost title="Random Podcasts" isSmall={true} api={actions} />
+        <RowPost
+          title="Cannabis related podcasts"
+          isSmall={true}
+          api={romance}
+        />
+        <RowPost title="Javascript podcasts" isSmall={true} api={comedy} />
+        <RowPost title="Python podcasts" isSmall={true} api={horror} />
       </OnHoverScrollContainer>
     </Col>
   );

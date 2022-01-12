@@ -20,6 +20,7 @@ export default function UserProfile() {
   const [bio, setBio] = useState("");
   const [editUserModal, setEditUserModal] = useState(false);
   const [firstRender, setFirstRender] = useState(false);
+
   const openEditUserModal = () => {
     if (!editUserModal) {
       setEditUserModal(true);
@@ -54,7 +55,7 @@ export default function UserProfile() {
       xs={10}
       md={8}
       lg={7}
-      className="center-content d-flex justify-content-center shadow-lg pt-2 text-white"
+      className="center-content d-flex justify-content-center shadow-lg pt-2 text-white "
     >
       <OnHoverScrollContainer>
         <Card className="bg-dark" style={{ width: "650px", height: "470px" }}>

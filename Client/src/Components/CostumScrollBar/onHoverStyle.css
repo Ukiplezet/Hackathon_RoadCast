@@ -11,7 +11,7 @@
   height: 100%;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  position: relative;
+  position: absolut;
 }
 
 .scroll-bar {
@@ -20,6 +20,7 @@
   right: 0;
   top: 0px;
   position: absolute;
+  overflow: hidden;
   border-radius: 7px;
   bottom: 0px;
   background-color: rgba(7, 190, 68, 0.733);
