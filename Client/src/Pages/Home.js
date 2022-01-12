@@ -61,7 +61,7 @@ const Home = () => {
     } catch (err) {
       return err.message;
     }
-  }, [user]);
+  }, []);
 
   if (user.auth) {
     return (

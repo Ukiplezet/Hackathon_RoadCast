@@ -76,19 +76,19 @@ export default function SearchForm() {
   const transportationOnChange = (event) => {
     setTransportation(event.target.value);
   };
-  // probably will ned to change the endpoint later
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5500/podcasts", {
-//         headers: {
-//           accessToken: localStorage.getItem("accessToken"),
-//         },
-//       })
-//       .then((response) => {
-//         setListOfPodcasts(response.data);
-//         console.log(response.data);
-//       });
-//   }, []);
+ // probably will need to change the endpoint later
+  useEffect(() => {
+    axios
+      .get("http://localhost:5500/podcasts", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        setListOfPodcasts(response.data);
+        console.log(response.data);
+      });
+  }, []);
 
   // not sure setRequest is the right choice here
   const onSubmit = async (e) => {
