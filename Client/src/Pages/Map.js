@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { Col } from "react-bootstrap";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 import * as tt from "@tomtom-international/web-sdk-maps";
@@ -6,13 +6,25 @@ import * as ttapi from "@tomtom-international/web-sdk-services";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { convertToPoints, drawRoute, addDestination } from "../Utils/mapFuncs";
 import GpsArrow from "../media/gps-arrow-orange.png"
+import { MapContext } from "../Context/MapContext"
 
 function Map() {
   const mapEl = useRef()
   const [map, setMap] = useState({})
-  const [routeInfo, setRouteInfo] = useState({});
-  const [latitude, setLatitude] = useState(32.052797); // set to current location
+  const { setRouteInfo } = useContext(MapContext)
+  const [currentLocationMsg, setCurrentLocationMsg] = useState("");
+  const [latitude, setLatitude] = useState(32.052797);
   const [longitude, setLongitude] = useState(34.772238);
+
+  useEffect(() => {
+      navigator.geolocation.watchPosition((position) => {
+          setCurrentLocationMsg(`Current location accurate to ${position.coords.accuracy}metres`)
+          setLatitude(position.coords.latitude)
+          setLongitude(position.coords.longitude);
+        }, (error) => {
+          setCurrentLocationMsg("To find current location turn on location in settings")
+      })
+  }, [])
 
   useEffect(() => {
     const origin = { lng: longitude, lat: latitude }
@@ -31,9 +43,6 @@ function Map() {
     setMap(tomtomMap);
 
     const addMarker = () => {
-      // const popUpOffset = { bottom: [0, -25] }
-      // const popUp = new tt.Popup({ offset: popUpOffset }).setHTML(<div style={{ color: "black"}}>"This is you!"</div>)
-
       const pin = document.createElement("div");
       pin.innerHTML = `<img src=${GpsArrow} height="20px" width="25px"/>`;
       pin.className = "locationMarker";
@@ -50,16 +59,12 @@ function Map() {
         setLongitude(lngLat.lng)
         setLatitude(lngLat.lat);
       })
-
-      // marker.setPopup(popUp).togglePopup()
     }
     addMarker()
 
 
     const sortDestinations = (locations) => {
-      const destinationPoints = locations.map(destination => {
-        return convertToPoints(destination)
-      })
+      const destinationPoints = locations.map(destination => convertToPoints(destination))
 
       const callParams = {
         key: process.env.REACT_APP_TOMTOM_API_KEY,
@@ -77,12 +82,8 @@ function Map() {
               drivingTime: result.response.routeSummary.travelTimeInSeconds,
             }
           });
-          resultsArr.sort((a, b) => {
-            return a.drivingTime - b.drivingTime
-          })
-          const sortedLocations = resultsArr.map(result => {
-            return result.location
-          })
+          resultsArr.sort((a, b) => a.drivingTime - b.drivingTime)
+          const sortedLocations = resultsArr.map(result => result.location)
           resolve(sortedLocations)
         })
       })
@@ -113,6 +114,11 @@ function Map() {
     return () => tomtomMap.remove();
   }, [longitude, latitude])
 
+  const beginRide = () => {
+    // localStorage.setItem("destinations", destinations)
+    console.log("hi")
+  }
+
   return (
     <Col
       className="map-container center-content shadow-lg pt-2 text-white"
@@ -121,9 +127,8 @@ function Map() {
       lg={7}
     >
       <OnHoverScrollContainer>
-        <Col>Where to?</Col>
-        
         {map && <>
+          {currentLocationMsg && <h3>{currentLocationMsg}</h3>}
           {/* <Col className="search-bar">
             <input
               type="text"
@@ -141,6 +146,7 @@ function Map() {
             />
           </Col> */}
           <div ref={mapEl} className="map" />
+          <div><button onClick={beginRide}>Go</button></div>
         </>}
       </OnHoverScrollContainer>
     </Col>
@@ -148,3 +154,6 @@ function Map() {
 }
 
 export default Map;
+// const popUpOffset = { bottom: [0, -25] }
+// const popUp = new tt.Popup({ offset: popUpOffset }).setHTML(<div style={{ color: "black"}}>"This is you!"</div>)
+// marker.setPopup(popUp).togglePopup()
