@@ -10,8 +10,8 @@ const verifyToken = require("../Middleware/auth");
 // post -> /search/:id
 // 1. based on ride form
 router.post("/:id", verifyToken, async (req, res) => {
-  console.log(req.params);
-  const podcastCategory = req.body.data;
+  console.log(`after token`, req.body);
+  const { podcastCategory, podcastName } = req.body.data;
   if (podcastName === "") {
     try {
       const response = await axios.get(

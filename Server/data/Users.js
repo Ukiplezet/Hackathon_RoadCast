@@ -8,12 +8,15 @@ async function loginUser(email, password) {
     if (!(email && password)) {
       return "All input is required";
     }
-
     const dbUser = await UserModel.findOne({ email });
     if (dbUser && (await bcrypt.compare(password, dbUser.password))) {
       const token = jwt.sign({ user_id: dbUser._id }, process.env.TOKEN_KEY, {
         expiresIn: "2h",
+      }, (err, token) => {
+        if (err) { console.log(err) }
+        res.send(token);
       });
+      console.log(token)
       dbUser.token = token;
       return dbUser;
     }
@@ -107,6 +110,7 @@ async function getUserFromDBById(userId) {
     return err;
   }
 }
+
 module.exports = {
   loginUser,
   addNewUser,
