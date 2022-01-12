@@ -61,11 +61,13 @@ function Navbar() {
           icon={faAngleLeft}
           style={{ cursor: "pointer" }}
           className="ms-4 mt-2 text-light"
+          onClick={() => history.goBack()}
         ></FontAwesomeIcon>
         <FontAwesomeIcon
           icon={faAngleRight}
           style={{ cursor: "pointer" }}
           className="ms-4 me-5 mt-2 text-light"
+          onClick={() => history.goForward()}
         ></FontAwesomeIcon>
 
         <img
