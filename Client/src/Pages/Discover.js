@@ -14,7 +14,7 @@ import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDi
 export default function Discover() {
   return (
     <Col
-      className="center-content shadow-lg pt-2 text-white"
+      className="center-content shadow-lg my-2  text-white"
       xs={10}
       md={8}
       lg={7}

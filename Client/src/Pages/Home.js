@@ -7,6 +7,8 @@ import { Link, useHistory } from "react-router-dom";
 import Login from "./Login";
 import SearchForm from "../Components/MainContent/SearchForm";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
+import RowPost from "../Components/NetFlixSlider/RowPost";
+import { originals } from "../Components/constants/urls";
 import api from "../Utils/API";
 
 const Home = () => {
@@ -51,18 +53,18 @@ const Home = () => {
       }
     }
   };
-  useEffect(() => {
-    try {
-      async function getUserData() {
-        const userId = localStorage.getItem("id");
-        await getUpdatedUserData(userId);
-        setLocalStorage();
-      }
-      getUserData();
-    } catch (err) {
-      return err.message;
-    }
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     async function getUserData() {
+  //       const userId = localStorage.getItem("id");
+  //       await getUpdatedUserData(userId);
+  //       setLocalStorage();
+  //     }
+  //     getUserData();
+  //   } catch (err) {
+  //     return err.message;
+  //   }
+  // }, []);
 
   if (user.auth) {
     return (
@@ -75,6 +77,12 @@ const Home = () => {
         <OnHoverScrollContainer>
           <h1>Let's find some podcasts.</h1>
           <SearchForm />
+          <RowPost
+            className="mb-5 pb-5"
+            title="Here are your podcasts of interes:"
+            isSmall={false}
+            api={originals}
+          />
         </OnHoverScrollContainer>
       </Col>
     );
