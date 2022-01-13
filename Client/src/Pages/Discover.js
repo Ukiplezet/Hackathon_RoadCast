@@ -1,103 +1,38 @@
 import React from "react";
 import { Card, Col, Carousel } from "react-bootstrap";
+import "../Layout/DiscoverStyle.css";
+import RowPost from "../Components/NetFlixSlider/RowPost";
+import {
+  actions,
+  comedy,
+  horror,
+  originals,
+  romance,
+} from "../Components/constants/urls";
+import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 
 export default function Discover() {
   return (
     <Col
-      className="center-content shadow-lg pt-2 text-white"
+      className="center-content shadow-lg   text-white"
       xs={10}
       md={8}
       lg={7}
     >
-      <h3>Today's favorite topic is:</h3>
-      <h4>Nicholas Cage!</h4>
-      <Carousel fade>
-        <Carousel.Item className="d-flex flex-col justify-content-center">
-          <img
-            style={{
-              height: "350px",
-              width: "250px",
-            }}
-            className="d-block w-75"
-            src="https://www.placecage.com/350/250"
-            alt="First slide"
-          />
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item className="d-flex flex-col justify-content-center">
-          <img
-            style={{
-              height: "350px",
-              width: "20vw",
-            }}
-            className="d-block w-75"
-            src="https://www.placecage.com/340/250"
-            alt="First slide"
-          />
-
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item className="d-flex flex-col justify-content-center">
-          <img
-            style={{
-              height: "350px",
-              width: "20vw",
-            }}
-            className="d-block w-75"
-            src="https://www.placecage.com/340/230"
-            alt="First slide"
-          />
-
-          <Carousel.Caption>
-            <h3>Third slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item className="d-flex flex-col justify-content-center">
-          <img
-            style={{
-              height: "350px",
-              width: "20vw",
-            }}
-            className="d-block w-75"
-            src="https://www.placecage.com/342/245"
-            alt="First slide"
-          />
-
-          <Carousel.Caption>
-            <h3>Fouth slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item className="d-flex flex-col justify-content-center">
-          <img
-            style={{
-              height: "350px",
-              width: "20vw",
-            }}
-            className="d-block w-75"
-            src="https://www.placecage.com/345/230"
-            alt="First slide"
-          />
-
-          <Carousel.Caption>
-            <h3>Fifth slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
+      <OnHoverScrollContainer>
+        <h1 className="my-3">Discover New &amp; Trending Podcasts</h1>
+        <h4>This is based on our talented Data-Science team</h4>
+        <h4> and our unique algorithm</h4>
+        <RowPost title="You might also like" isSmall={true} api={originals} />
+        <RowPost title="Random Podcasts" isSmall={true} api={actions} />
+        <RowPost
+          title="Cannabis related podcasts"
+          isSmall={true}
+          api={romance}
+        />
+        <RowPost title="Javascript podcasts" isSmall={true} api={comedy} />
+        <RowPost title="Python podcasts" isSmall={true} api={horror} />
+      </OnHoverScrollContainer>
     </Col>
   );
 }

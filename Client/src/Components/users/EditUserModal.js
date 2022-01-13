@@ -32,7 +32,6 @@ export default function EditUserModal(props) {
           phoneNumber,
           userId,
         });
-        setUser(response);
         props.setFirstRender(true);
       } catch (err) {
         console.log(err.message);
@@ -41,7 +40,6 @@ export default function EditUserModal(props) {
       alert("password doesnt match!");
     }
   };
-
   return (
     <Modal
       show={props.editUserModal}

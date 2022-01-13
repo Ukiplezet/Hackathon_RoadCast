@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-// import "../App.css";
-import axios from "axios";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import React, { useState, useEffect, useContext } from "react";
+import "./SearchForm";
+import api from "../../Utils/API";
+import { Button, Container } from "react-bootstrap";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -15,8 +14,21 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { scroller } from "react-scroll";
+import PodcastCard from "../PodcastData/PodcastCard";
+import { MapContext } from "../../Context/MapContext";
+// {
+//   FormData: {
+//       startingPoint: "hadera",
+//       destination: "tel aviv",
+//       podcastCategory: ["politics", "health", "enviroment"],
+//       podcastName: "Omri Sucks bad", //(OPTIONAL)
+//       transportation: "bus",
+//   }
+// }
 
-export default function SearchForm() {
+export default function SearchForm(props) {
+  const { routeInfo } = useContext(MapContext);
+  console.log(routeInfo);
   const [request, setRequest] = useState(false);
   const [startingPoint, setStartingPoint] = useState("");
   const [destination, setDestination] = useState("");
@@ -52,53 +64,77 @@ export default function SearchForm() {
 
   const startingPointOnChange = (event) => {
     setStartingPoint(event.target.value);
+    console.log(event.target.value);
   };
 
   const destinationOnChange = (event) => {
     setDestination(event.target.value);
+    console.log(event.target.value);
   };
 
   const podcastCategoryOnChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPodcastCategory(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setPodcastCategory(typeof value === "string" ? value.split(",") : value);
+    console.log(event.target.value);
   };
 
   const podcastNameOnChange = (event) => {
     setPodcastName(event.target.value);
+    console.log(event.target.value);
   };
 
   const transportationOnChange = (event) => {
     setTransportation(event.target.value);
+    console.log(event.target.value);
   };
-  // probably will ned to change the endpoint later
-  useEffect(() => {
-    axios
-      .get("http://localhost:5500/podcasts", {
-        headers: {
-          accessToken: localStorage.getItem("accessToken"),
-        },
-      })
-      .then((response) => {
-        setListOfPodcasts(response.data);
-        console.log(response.data);
-      });
-  }, []);
+
+  // // probably will need to change the endpoint later
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5500/podcasts", {
+  //       headers: {
+  //         accessToken: localStorage.getItem("accessToken"),
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setListOfPodcasts(response.data);
+  //       console.log(response.data);
+  //     });
+  // }, []);
 
   // not sure setRequest is the right choice here
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setRequest(podcastCategory);
+
+    const formData = new FormData();
+
+    formData.append("startingPoint", startingPoint);
+    formData.append("destination", destination);
+    formData.append("podcastCategory", podcastCategory);
+    formData.append("transportation", transportation);
+    formData.append("podcastName", podcastName);
+
+    // await axios
+    //   .get("http://localhost:3001/podcasts", formData, {})
+    //   .then((response) => {
+    //     setListOfPodcasts(response.data);
+    //   });
+    const data = {};
+    for (let field of formData) {
+      const [key, value] = field;
+      data[key] = value;
+    }
+    console.log(data);
+    const response = await api.findPodcastBasedOnSearchForm(data);
+    console.log(response);
   };
 
-  //should it be podcastCategory or podcastName? or somehow and if statement? If a user entered the name, give them that specific podcast
   const requestedData = listOfPodcasts.filter(
     (element) => element.podcastCategory === request
   );
+  //should it be podcastCategory or podcastName? or somehow and if statement? If a user entered the name, give them that specific podcast
 
   const scrollToPodcastList = () => {
     scroller.scrollTo("podcastCategory", {
@@ -106,18 +142,19 @@ export default function SearchForm() {
       duration: 700,
     });
   };
+
   return (
     <>
-      <Box>
+      <Container className="SearchFormBox d-flex justify-content-center mb-2 pe-5">
         <Card
-          className="searchPaper"
+          className="SearchFormBox searchPaper"
           elevation={3}
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            width: 450,
+            width: 800,
             height: 600,
             borderRadius: "2%",
             marginTop: "2rem",
@@ -198,19 +235,21 @@ export default function SearchForm() {
             onChange={podcastNameOnChange}
           />
           <Button
-            variant="contained"
+            variant="success"
             className="searchButton"
             // onClick={onSubmit}
-            onClick={() => {
-              onSubmit();
+            onClick={(e) => {
+              handleSubmit(e);
               scrollToPodcastList();
+              props.showSearchFormHandler();
+              props.displaySearchResultsHandler();
             }}
             method="POST"
           >
             Find me a podcast
           </Button>
         </Card>
-      </Box>
+      </Container>
 
       {requestedData.map((element) => {
         return (
@@ -228,57 +267,5 @@ export default function SearchForm() {
         );
       })}
     </>
-  );
-}
-
-// ------------------------------------------------------------------------------------------------
-
-function PodcastCard(props) {
-  return (
-    <Card
-      className="podcastCard"
-      id="podcastList
-    podcastList"
-      sx={{ maxWidth: 345, maxHeight: 345 }}
-    >
-      <CardContent>
-        <img
-          src={`http://localhost:5500/${props.picture}`}
-          alt={props.podcastName}
-          variant="body2"
-          color="text.secondary"
-        />
-
-        <Typography paragraph color="text.secondary">
-          {props.podcastName}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.podcastDescription}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.podcastCategory}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          Episodes
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.date}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.episodeDescription}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.rating}
-        </Typography>
-        <Typography paragraph color="text.secondary">
-          {props.length}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <Link to={"/listeningnow/:loggedId" + Number(props.id)}>Play</Link>
-        </IconButton>
-      </CardActions>
-    </Card>
   );
 }

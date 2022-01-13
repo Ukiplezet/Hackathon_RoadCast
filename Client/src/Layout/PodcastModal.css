@@ -1,0 +1,11 @@
+.podcast-modal {
+  width: 1000px; /* Occupy the 90% of the screen width */
+  max-width: 90vw;
+}
+.podcast-card {
+  background-color: #2e3646;
+}
+.podcast-modal-header,
+.podcast-modal-footer {
+  background-color: #343435;
+}

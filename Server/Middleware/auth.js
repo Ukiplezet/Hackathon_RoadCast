@@ -7,7 +7,6 @@ const verifyToken = (req, res, next) => {
     req.body.token ||
     req.headers.authorization.replace("Bearer ", "") ||
     req.headers["x-access-token"];
-
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
@@ -15,8 +14,10 @@ const verifyToken = (req, res, next) => {
     const decoded = jwt.verify(token, config.TOKEN_KEY);
     req.user = decoded;
   } catch (err) {
+    console.log(err);
     return err;
-  }
+  }  console.log(req.body);
+
   return next();
 };
 

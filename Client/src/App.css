@@ -2,10 +2,12 @@
   background-color: #232227;
   text-align: center;
   height: 100vh;
+  width: 100vw;
   min-height: 100vh;
   max-height: 100vh;
   font-size: calc(10px + 2vmin);
   color: white;
+  position: fixed;
 }
 
 .searchForm {
@@ -19,4 +21,47 @@
 
 .css-sghohy-MuiButtonBase-root-MuiButton-root {
   margin: 1rem 0 0.5rem 0 !important;
+}
+
+
+/* Map */
+.map-container {
+  display: flex;
+  justify-content: center;
+}
+.map{
+  margin-top: 5px;
+  height: 500px;
+  width: 750px;
+  overflow: hidden;
+}
+
+.locationMarker {
+  display: flex;
+  justify-content: center;
+  padding: 7px 5px;
+  background-color: #F6F6F6;
+  border: 1px solid #F28830;
+  border-radius: 25px;
+}
+
+.destination {
+  height: 18px;
+  width: 18px;
+  background-color: #F28830;
+  border-radius: 9px;
+}
+.searchDestination {
+  display: flex;
+  justify-content: center;
+  padding: 5px 4px;
+  border: 1px solid #D73E2A;
+  background-color: #fff;
+  border-radius: 25px;
+}
+
+.mapSearchList {
+  position: absolute;
+  background-color: #2E3646;
+  min-width: 300px;
 }
