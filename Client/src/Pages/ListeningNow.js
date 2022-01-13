@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Container, Row } from "react-bootstrap";
 import AudioPlayer from "react-audio-element";
@@ -6,6 +6,10 @@ import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDi
 import PodcastCard from "../Components/PodcastData/PodcastCard";
 
 function CenterContent() {
+  useEffect(() => {
+    const storedPodcast = localStorage.getItem("podcast");
+    console.log(storedPodcast);
+  }, []);
   return (
     <Col
       className="center-content shadow-lg py-2 text-white"

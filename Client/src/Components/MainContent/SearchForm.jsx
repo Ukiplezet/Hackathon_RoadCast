@@ -16,6 +16,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { scroller } from "react-scroll";
 import PodcastCard from "../PodcastData/PodcastCard";
 import { MapContext } from "../../Context/MapContext";
+import RowPost from "../NetFlixSlider/RowPost";
 // {
 //   FormData: {
 //       startingPoint: "hadera",
@@ -36,7 +37,6 @@ export default function SearchForm(props) {
   const [podcastName, setPodcastName] = useState([]);
   const [transportation, setTransportation] = useState("Car");
   const [listOfPodcasts, setListOfPodcasts] = useState([]);
-
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -90,21 +90,6 @@ export default function SearchForm(props) {
     console.log(event.target.value);
   };
 
-  // // probably will need to change the endpoint later
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5500/podcasts", {
-  //       headers: {
-  //         accessToken: localStorage.getItem("accessToken"),
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setListOfPodcasts(response.data);
-  //       console.log(response.data);
-  //     });
-  // }, []);
-
-  // not sure setRequest is the right choice here
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -115,26 +100,13 @@ export default function SearchForm(props) {
     formData.append("podcastCategory", podcastCategory);
     formData.append("transportation", transportation);
     formData.append("podcastName", podcastName);
-
-    // await axios
-    //   .get("http://localhost:3001/podcasts", formData, {})
-    //   .then((response) => {
-    //     setListOfPodcasts(response.data);
-    //   });
     const data = {};
     for (let field of formData) {
       const [key, value] = field;
       data[key] = value;
     }
-    console.log(data);
-    const response = await api.findPodcastBasedOnSearchForm(data);
-    console.log(response);
+    props.handleSearchRequest(data);
   };
-
-  const requestedData = listOfPodcasts.filter(
-    (element) => element.podcastCategory === request
-  );
-  //should it be podcastCategory or podcastName? or somehow and if statement? If a user entered the name, give them that specific podcast
 
   const scrollToPodcastList = () => {
     scroller.scrollTo("podcastCategory", {
@@ -250,22 +222,6 @@ export default function SearchForm(props) {
           </Button>
         </Card>
       </Container>
-
-      {requestedData.map((element) => {
-        return (
-          <PodcastCard
-            id={element.id}
-            podcastCategory={element.podcastCategory}
-            podcastName={element.podcastName}
-            picture={element.picture}
-            podcastDescription={element.podcastDescription}
-            episodeDescription={element.episodeDescription}
-            date={element.date}
-            length={element.length}
-            rating={element.rating}
-          />
-        );
-      })}
     </>
   );
 }

@@ -6,17 +6,27 @@ import React, { useState, useContext } from "react";
 import "../../Layout/PodcastModal.css";
 import PodcastCard from "./PodcastCard";
 import { useHistory } from "react-router-dom";
+
 export default function PodcastModal(props) {
   const history = useHistory();
-  //   const {
-  //     podcastName,
-  //     podcastDescription,
-  //     podcastCategory,
-  //     length,
-  //     date,
-  //     episodeDescription,
-  //     rating,
-  //   } = podcast;
+  const { title_original, id } = props.podcast;
+
+  /* // id={element.id}
+      // podcastCategory={element.podcast.genre_ids}
+      // podcastName={element.title_original}
+      // picture={element.podcast.thumbnail}
+      // podcastDescription={element.description_original}
+      // episodeDescription={element.episodeDescription}
+      // date={element.pub_date_ms}
+      // length={element.audio_length_sec}
+      // rating={element.rating}
+      // audio={element.autio} */
+  const playSelectedPodcast = async (podcast) => {
+    const userId = localStorage.getItem("id");
+    const storedPodcast = localStorage.setItem("podcast", podcast);
+    history.push(`/listeningnow/${userId}/`);
+  };
+
   return (
     <>
       <Modal
@@ -26,9 +36,9 @@ export default function PodcastModal(props) {
         className=""
       >
         <Modal.Header className=" podcast-modal-header d-flex justify-content-center">
-          <Modal.Title className="text-light">podcastName</Modal.Title>
+          <Modal.Title className="text-light">{title_original}</Modal.Title>
         </Modal.Header>
-        <PodcastCard props={props} />
+        <PodcastCard podcast={props.podcast} id={id} />
         <Card.Footer className="podcast-modal-footer">
           <Col className="flex-row d-flex pb-0 justify-content-evenly">
             <Button
@@ -46,10 +56,9 @@ export default function PodcastModal(props) {
             <Button
               variant="success"
               className="mx-2"
-              onClick={() => {
+              onClick={async () => {
                 props.HandleOpenPocastModal();
-                const userId = localStorage.getItem("id");
-                history.push(`/listeningnow/${userId}`);
+                await playSelectedPodcast(props.podcast);
               }}
             >
               Play This Podcast
