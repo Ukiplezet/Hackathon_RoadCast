@@ -15,6 +15,10 @@ import gensim.downloader
 import ssl
 import ast
 
+
+LOCAL_RUN = False
+AWS_PORT = 8080
+
 ssl._create_default_https_context = ssl._create_unverified_context
 
 # download('stopwords')
@@ -182,4 +186,8 @@ def recommendation():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    if LOCAL_RUN:
+        app.run(debug=True)
+    else:
+        app.run(host='0.0.0.0', port=AWS_PORT)
+
