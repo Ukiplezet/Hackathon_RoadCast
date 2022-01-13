@@ -43,7 +43,7 @@ const Login = (props) => {
         await settingLoggedUserContext(response);
         const loggedId = response._id;
         props.handleModalOpen();
-        history.push(`/${loggedId}`);
+        history.push(`/map/:${loggedId}`);
       } catch (err) {
         return err.message;
       }
@@ -72,7 +72,7 @@ const Login = (props) => {
         await settingLoggedUserContext(response);
         const loggedId = response._id;
         props.handleModalOpen();
-        history.push(`/${loggedId}`);
+        history.push(`/map/:${loggedId}`);
       }
     } catch (err) {
       alert(err.message);

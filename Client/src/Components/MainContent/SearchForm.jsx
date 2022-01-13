@@ -17,6 +17,8 @@ import { scroller } from "react-scroll";
 import PodcastCard from "../PodcastData/PodcastCard";
 import { MapContext } from "../../Context/MapContext";
 import RowPost from "../NetFlixSlider/RowPost";
+import { MenuProps, podcastOptions} from "./SearchFormStyles"
+
 // {
 //   FormData: {
 //       startingPoint: "hadera",
@@ -31,12 +33,10 @@ export default function SearchForm(props) {
   const { routeInfo } = useContext(MapContext);
   console.log(routeInfo);
   const [request, setRequest] = useState(false);
-  const [startingPoint, setStartingPoint] = useState("");
-  const [destination, setDestination] = useState("");
   const [podcastCategory, setPodcastCategory] = useState([]);
   const [podcastName, setPodcastName] = useState([]);
-  const [transportation, setTransportation] = useState("Car");
   const [listOfPodcasts, setListOfPodcasts] = useState([]);
+<<<<<<< HEAD
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -71,6 +71,8 @@ export default function SearchForm(props) {
     setDestination(event.target.value);
     console.log(event.target.value);
   };
+=======
+>>>>>>> 025bbb6c9f6207db4a889249320d96b1e1a55311
 
   const podcastCategoryOnChange = (event) => {
     const {
@@ -85,20 +87,39 @@ export default function SearchForm(props) {
     console.log(event.target.value);
   };
 
+<<<<<<< HEAD
   const transportationOnChange = (event) => {
     setTransportation(event.target.value);
     console.log(event.target.value);
   };
 
+=======
+  // // probably will need to change the endpoint later
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5500/podcasts", {
+  //       headers: {
+  //         accessToken: localStorage.getItem("accessToken"),
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setListOfPodcasts(response.data);
+  //       console.log(response.data);
+  //     });
+  // }, []);
+
+  // not sure setRequest is the right choice here
+>>>>>>> 025bbb6c9f6207db4a889249320d96b1e1a55311
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
 
-    formData.append("startingPoint", startingPoint);
-    formData.append("destination", destination);
+    formData.append("travelDuration", routeInfo.travelTimeInSeconds);
+    formData.append("distanceInMeters", routeInfo.lengthInMeters);
+    formData.append("arrivalTime", routeInfo.arrivalTime);
+    formData.append("departureTime", routeInfo.departureTime);
     formData.append("podcastCategory", podcastCategory);
-    formData.append("transportation", transportation);
     formData.append("podcastName", podcastName);
     const data = {};
     for (let field of formData) {
@@ -122,60 +143,18 @@ export default function SearchForm(props) {
           className="SearchFormBox searchPaper"
           elevation={3}
           style={{
+            padding: 5,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             width: 800,
-            height: 600,
+            height: 280,
             borderRadius: "2%",
             marginTop: "2rem",
             marginLeft: "2rem",
           }}
         >
-          <InputLabel className="searchForm" id="demo-simple-select-label">
-            Starting point
-          </InputLabel>
-          <TextField
-            style={{ width: "20rem" }}
-            className=""
-            id="startingPoint"
-            label="Starting Point"
-            value={startingPoint}
-            onChange={startingPointOnChange}
-            required
-          />
-          <InputLabel className="searchForm" id="demo-simple-select-label">
-            Choose your destination
-          </InputLabel>
-          <TextField
-            style={{ width: "20rem" }}
-            className=""
-            id="destination"
-            label="Destination"
-            value={destination}
-            onChange={destinationOnChange}
-            required
-          />
-          <InputLabel className="searchForm" id="demo-simple-select-label">
-            How are you getting there?
-          </InputLabel>
-          <Select
-            style={{ width: "8rem" }}
-            defaultValue="Car"
-            label="Transportation"
-            className=""
-            id="transportation"
-            required
-            onChange={transportationOnChange}
-          >
-            <MenuItem value="Car">Car</MenuItem>
-            <MenuItem value="Bus">Bus</MenuItem>
-            <MenuItem value="Train">Train</MenuItem>
-            <MenuItem value="Bicycle">Bicycle</MenuItem>
-            <MenuItem value="Scooter">Scooter</MenuItem>
-            <MenuItem value="I'll walk">I'll walk</MenuItem>
-          </Select>
           <InputLabel className="searchForm" id="demo-simple-select-label">
             Choose category
           </InputLabel>
