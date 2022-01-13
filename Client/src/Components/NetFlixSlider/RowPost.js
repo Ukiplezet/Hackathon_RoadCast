@@ -18,28 +18,35 @@ function RowPost({
 }) {
   const [movies, setMovies] = useState([]);
   const [podcastModal, setPodcastModal] = useState(false);
-  const [podcastContent, setPodcastContent] = useState({});
   useEffect(() => {
     sortResult();
   }, []);
   const sortResult = async () => {
     setMovies(resultsObject);
   };
-
-  const openPodcastModal = (item) => {
-    setPodcastContent(item);
-    if (!podcastModal) {
-      setPodcastModal(true);
-    } else {
-      setPodcastModal(false);
-    }
+  const openPodcastModal = () => {
+    setPodcastModal(!podcastModal);
+    console.log("fuck me");
+    resultsObject.filter((id) => {
+      if (id === resultsObject.id)
+        return (
+          <PodcastModal
+            toggleShow={toggleShow}
+            HandleOpenPocastModal={openPodcastModal}
+            podcastModal={podcastModal}
+            displaySearchResultsHandler={displaySearchResultsHandler}
+            setShowLoadingSpinner={setShowLoadingSpinner}
+            setResultSliderOpen={setResultSliderOpen}
+            podcast={resultsObject}
+          />
+        );
+    });
   };
-
   let display = resultsObject.map((item, index) => {
-    console.log(item);
     return (
-      <div onClick={openPodcastModal(item)} key={index.id}>
+      <div onClick={openPodcastModal}>
         <img
+          key={index.id}
           className={isSmall ? "small-poster" : "poster"}
           src={item.podcast.thumbnail}
           alt=""
@@ -55,7 +62,6 @@ function RowPost({
 
         <div className="posters">{resultsObject && display} </div>
       </div>
-
       <PodcastModal
         toggleShow={toggleShow}
         HandleOpenPocastModal={openPodcastModal}
@@ -63,7 +69,7 @@ function RowPost({
         displaySearchResultsHandler={displaySearchResultsHandler}
         setShowLoadingSpinner={setShowLoadingSpinner}
         setResultSliderOpen={setResultSliderOpen}
-        podcast={podcastContent}
+        podcast={resultsObject}
       />
     </>
   );
