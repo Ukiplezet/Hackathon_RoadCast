@@ -32,13 +32,14 @@
 .map{
   margin-top: 5px;
   height: 500px;
-  width: 700px;
+  width: 750px;
+  overflow: hidden;
 }
 
 .locationMarker {
   display: flex;
   justify-content: center;
-  padding: 6px;
+  padding: 7px 5px;
   background-color: #F6F6F6;
   border: 1px solid #F28830;
   border-radius: 25px;
@@ -48,6 +49,19 @@
   height: 18px;
   width: 18px;
   background-color: #F28830;
-  border: 1px solid black;
   border-radius: 9px;
+}
+.searchDestination {
+  display: flex;
+  justify-content: center;
+  padding: 5px 4px;
+  border: 1px solid #D73E2A;
+  background-color: #fff;
+  border-radius: 25px;
+}
+
+.mapSearchList {
+  position: absolute;
+  background-color: #2E3646;
+  min-width: 300px;
 }

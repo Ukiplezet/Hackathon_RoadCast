@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./SearchForm";
 import api from "../../Utils/API";
 import { Button, Container } from "react-bootstrap";
@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { scroller } from "react-scroll";
 import PodcastCard from "../PodcastData/PodcastCard";
+import { MapContext } from "../../Context/MapContext";
 // {
 //   FormData: {
 //       startingPoint: "hadera",
@@ -26,6 +27,8 @@ import PodcastCard from "../PodcastData/PodcastCard";
 // }
 
 export default function SearchForm(props) {
+  const { routeInfo } = useContext(MapContext);
+  console.log(routeInfo);
   const [request, setRequest] = useState(false);
   const [startingPoint, setStartingPoint] = useState("");
   const [destination, setDestination] = useState("");

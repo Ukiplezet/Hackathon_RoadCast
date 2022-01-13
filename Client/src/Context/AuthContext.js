@@ -4,6 +4,7 @@ export const UserContext = createContext({
   email: "",
   auth: false,
 });
+
 const token = localStorage.getItem("token");
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
