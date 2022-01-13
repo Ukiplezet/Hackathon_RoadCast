@@ -1,26 +1,24 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Col } from "react-bootstrap";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import Button from "@mui/material/Button";
+import SnackbarContent from "@mui/material/SnackbarContent";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 import * as tt from "@tomtom-international/web-sdk-maps";
 import * as ttapi from "@tomtom-international/web-sdk-services";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
-import {
-  convertToPoints,
-  drawRoute,
-  addDestination,
-  markSearchedField,
-} from "../Utils/mapFuncs";
+import { convertToPoints, drawRoute, addDestination, markSearchedField } from "../Utils/mapFuncs";
 import GpsArrow from "../media/gps-arrow-orange.png"
-import GpsPin from "../media/gps-pointer.jpeg";
 import { MapContext } from "../Context/MapContext"
 
 function Map() {
   const mapEl = useRef()
+  const history = useHistory()
   const [map, setMap] = useState({})
-  const { setRouteInfo } = useContext(MapContext)
+  const { routeInfo, setRouteInfo } = useContext(MapContext)
   const [currentLocationMsg, setCurrentLocationMsg] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -33,7 +31,7 @@ function Map() {
           setLatitude(position.coords.latitude)
           setLongitude(position.coords.longitude);
         }, (error) => {
-          setCurrentLocationMsg("To find current location turn on location in settings")
+          setCurrentLocationMsg("To find current location, turn on location in settings")
       })
   }, [])
 
@@ -128,7 +126,7 @@ function Map() {
   const search = () => {
     ttapi.services.fuzzySearch({
       key: process.env.REACT_APP_TOMTOM_API_KEY,
-      query: searchInput, // Change to state
+      query: searchInput,
       boundingBox: map.getBounds()
     }).then(results => {
       if (results.results.length === 0) {
@@ -149,6 +147,12 @@ function Map() {
     markSearchedField(result.position, map);
   }
 
+  const goFindPodcasts = (event) => {
+    // Fix bug: routeInfo won't disable btn when you return to map page even tho route has disappeared
+    event.preventDefault()
+    history.push("/:loggedId");
+  }
+
   return (
     <Col
       className="map-container shadow-lg pt-2 text-white"
@@ -157,10 +161,6 @@ function Map() {
       lg={7}
     >
       <OnHoverScrollContainer>
-        {map && <>
-            {currentLocationMsg && <h3>{currentLocationMsg}</h3>}
-            <div ref={mapEl} className="map" />
-          </>}
         <div>
           <input type="text" id="query" value={searchInput} onChange={e => { setSearchInput(e.target.value) }} />
           <button onClick={search}>Search</button>
@@ -174,6 +174,17 @@ function Map() {
             </List>}
           </div>
         </div>
+        {map && <>
+            <SnackbarContent message={currentLocationMsg} className="mapSnackBar"/>
+            <div ref={mapEl} className="map" />
+            <div className="mapBtn">
+              <Button
+                variant="contained"
+                disabled={routeInfo.travelTimeInSeconds ? false : true}
+                onClick={goFindPodcasts}
+              >Go</Button>
+            </div>
+          </>}
       </OnHoverScrollContainer>
     </Col>
   );
