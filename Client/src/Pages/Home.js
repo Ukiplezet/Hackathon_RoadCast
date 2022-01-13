@@ -170,19 +170,21 @@ const Home = () => {
         lg={12}
       >
         <Col>
-          <Welcome />
-          <h2> A novel commute to work</h2>
-          <h3>Find podcasts that suit your length of commute</h3>
-          <h3>Please login to start your trip</h3>
-          <iframe
-            src="https://giphy.com/embed/xUA7aQfR9hhgU78KDC"
-            width="700"
-            height="440"
-            frameBorder="0"
-            class="giphy-embed"
-            allowFullScreen
-          ></iframe>
-          <Login modalOpen={modalOpen} handleModalOpen={openModalHandler} />
+          <OnHoverScrollContainer>
+            <Welcome />
+            <h2> A novel commute to work</h2>
+            <h3>Find podcasts that suit your length of commute</h3>
+            <h3>Please login to start your trip</h3>
+            <iframe
+              src="https://giphy.com/embed/xUA7aQfR9hhgU78KDC"
+              width="700"
+              height="440"
+              frameBorder="0"
+              class="giphy-embed"
+              allowFullScreen
+            ></iframe>
+            <Login modalOpen={modalOpen} handleModalOpen={openModalHandler} />
+          </OnHoverScrollContainer>
         </Col>
       </Col>
     );

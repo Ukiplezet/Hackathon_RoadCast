@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const router = express.Router();
-
+const axios = require("axios");
 const BASE_URL = `https://listen-api-test.listennotes.com/api/v2`;
 
 const { getUserFromDBById } = require("../Controllers/UsersController");
@@ -10,49 +10,45 @@ const verifyToken = require("../Middleware/auth");
 // post -> /search/:id
 // 1. based on ride form
 router.post("/:id", verifyToken, async (req, res) => {
+  console.log(req.body);
   const { podcastCategory, podcastName } = req.body.data;
   if (podcastName === "") {
     try {
       const response = await axios.get(
-        `${BASE_URL}/search?q=${podcastCategory}`,
-        {
-          headers: {
-            "X-ListenAPI-Key": a382e1635f0340a7892a7b19aa42c8ca,
-          },
-        }
+        `${BASE_URL}/search?q=${podcastCategory}`
       );
-      console.log(response);
-      // return res.status(200).send(response.data);
+      return res.status(200).send(response.data);
     } catch (err) {
       return err;
     }
   } else {
     try {
-      const response = await axios.get(`${BASE_URL}/search?q=${podcastName}`, {
-        headers: {
-          "X-ListenAPI-Key": a382e1635f0340a7892a7b19aa42c8ca,
-        },
-      });
-      console.log(response);
+      const response = await axios.get(`${BASE_URL}/search?q=${podcastName}`);
       return res.status(200).send(response.data);
     } catch (err) {
       return err;
     }
-    return res.status(200).send(response.data);
   }
 });
 
-// get -> /search/saved/:id
+
+const BASE_URL_DS = `http://ec2-3-66-174-245.eu-central-1.compute.amazonaws.com:8080/roadcast`;
+// get -> /search/similar/:id
 // 2. for savedpodcast list
-router.get("saved/:id", verifyToken, async (req, res) => {
-  //go to mongo getUserById
-  const userId = req.params.id;
-  const response = await getUserFromDBById(userId);
-  response.savedpodcasts = [];
+router.post("similar/:id", verifyToken, async (req, res) => {
+  {
+    description_original;
+    title_original; //we get from front end from req.body
+    podcastCategory;
+  }
+  //- description_ep
+  //-description_pod
+  //- categories;
+  //time: [min, max]
+  //batch_size: int;
   try {
-    for (i = 0; i < response.savedpodcasts.length; i++) {
-      const response = await axios.get(
-        `${BASE_URL}/podcasts/${savedPodcasts[i]}`
+      const response = await axios.post(
+        `${BASE_URL_DS}/podcasts/${savedPodcasts[i]}`
       );
       // put the obejct from response in an object
     }
