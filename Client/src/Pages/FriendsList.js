@@ -11,7 +11,14 @@ export default function FriendsList() {
       lg={7}
     >
       <OnHoverScrollContainer>
-        This is the friends list of the friends of the user
+        <h1>Work In Progress</h1>
+        <h4>In the meanwhile you can go out-side and enjoy the weather</h4>
+        <h5>(something I didn't do because of the hackathon...)</h5>
+        <img
+          className="mt-2"
+          src="https://copyrightlately.com/wp-content/uploads/2020/11/Graphic-for-Nirvana-Post.png"
+          style={{ height: "480px", width: "700px" }}
+        />
       </OnHoverScrollContainer>
     </Col>
   );

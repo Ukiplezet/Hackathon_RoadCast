@@ -26,9 +26,9 @@ import { MapContext } from "../../Context/MapContext";
 //   }
 // }
 
-export default function SearchForm() {
-  const { routeInfo } = useContext(MapContext)
-  console.log(routeInfo)
+export default function SearchForm(props) {
+  const { routeInfo } = useContext(MapContext);
+  console.log(routeInfo);
   const [request, setRequest] = useState(false);
   const [startingPoint, setStartingPoint] = useState("");
   const [destination, setDestination] = useState("");
@@ -241,6 +241,8 @@ export default function SearchForm() {
             onClick={(e) => {
               handleSubmit(e);
               scrollToPodcastList();
+              props.showSearchFormHandler();
+              props.displaySearchResultsHandler();
             }}
             method="POST"
           >

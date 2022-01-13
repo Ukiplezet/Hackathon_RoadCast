@@ -38,18 +38,18 @@ function Map() {
   }, [])
 
   useEffect(() => {
-    const origin = { lng: longitude, lat: latitude }
+    const origin = { lng: longitude, lat: latitude };
     const destinations = [];
 
     let tomtomMap = tt.map({
-        key: process.env.REACT_APP_TOMTOM_API_KEY,
-        container: mapEl.current,
-        stylesVisibility: {
-          trafficIncidents: true,
-          trafficFlow: true
-        },
-        center: [longitude, latitude],
-        zoom: 15
+      key: process.env.REACT_APP_TOMTOM_API_KEY,
+      container: mapEl.current,
+      stylesVisibility: {
+        trafficIncidents: true,
+        trafficFlow: true,
+      },
+      center: [longitude, latitude],
+      zoom: 15,
     });
     setMap(tomtomMap);
 
@@ -62,20 +62,21 @@ function Map() {
         draggable: true,
         element: pin,
       })
-      .setLngLat([longitude, latitude])
-      .addTo(tomtomMap)
+        .setLngLat([longitude, latitude])
+        .addTo(tomtomMap);
 
       marker.on("dragend", () => {
-        const lngLat = marker.getLngLat()
-        setLongitude(lngLat.lng)
+        const lngLat = marker.getLngLat();
+        setLongitude(lngLat.lng);
         setLatitude(lngLat.lat);
       })
     }
     addMarker()
 
-
     const sortDestinations = (locations) => {
-      const destinationPoints = locations.map(destination => convertToPoints(destination))
+      const destinationPoints = locations.map((destination) => {
+        return convertToPoints(destination);
+      });
 
       const callParams = {
         key: process.env.REACT_APP_TOMTOM_API_KEY,
@@ -83,47 +84,46 @@ function Map() {
         origins: [convertToPoints(origin)],
       };
 
-      return new Promise((resolve, reject)=> {
-        ttapi.services.matrixRouting(callParams)
-        .then((matrixAPIResults) => {
-          const results = matrixAPIResults.matrix[0]
+      return new Promise((resolve, reject) => {
+        ttapi.services.matrixRouting(callParams).then((matrixAPIResults) => {
+          const results = matrixAPIResults.matrix[0];
           const resultsArr = results.map((result, index) => {
             return {
               location: locations[index],
               drivingTime: result.response.routeSummary.travelTimeInSeconds,
-            }
+            };
           });
-          resultsArr.sort((a, b) => a.drivingTime - b.drivingTime)
-          const sortedLocations = resultsArr.map(result => result.location)
-          resolve(sortedLocations)
-        })
-      })
-    }
+          resultsArr.sort((a, b) => a.drivingTime - b.drivingTime );
+          const sortedLocations = resultsArr.map((result) => result.location );
+          resolve(sortedLocations);
+        });
+      });
+    };
 
     const recalculateRoutes = () => {
-      sortDestinations(destinations)
-      .then((sorted) => {
-        sorted.unshift(origin)
-        ttapi.services.calculateRoute({
-          key: process.env.REACT_APP_TOMTOM_API_KEY,
-          locations: sorted,
-        })
-        .then(routeData => {
-          setRouteInfo(routeData.routes[0].summary)
-          const geoJson = routeData.toGeoJson()
-          drawRoute(geoJson, tomtomMap)
-        })
-      })
-    }
+      sortDestinations(destinations).then((sorted) => {
+        sorted.unshift(origin);
+        ttapi.services
+          .calculateRoute({
+            key: process.env.REACT_APP_TOMTOM_API_KEY,
+            locations: sorted,
+          })
+          .then((routeData) => {
+            setRouteInfo(routeData.routes[0].summary);
+            const geoJson = routeData.toGeoJson();
+            drawRoute(geoJson, tomtomMap);
+          });
+      });
+    };
 
     tomtomMap.on("click", (e) => {
       destinations.push(e.lngLat);
       addDestination(e.lngLat, tomtomMap);
-      recalculateRoutes()
+      recalculateRoutes();
     });
 
     return () => tomtomMap.remove();
-  }, [longitude, latitude])
+  }, [longitude, latitude]);
 
   const search = () => {
     ttapi.services.fuzzySearch({

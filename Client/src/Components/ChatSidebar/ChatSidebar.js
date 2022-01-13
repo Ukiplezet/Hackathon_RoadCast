@@ -24,13 +24,13 @@ function ChatSidebar() {
       md={2}
       lg={3}
     >
-      <div className="mt-3 ">
+      <div className="mt-3 fs-6">
         <FontAwesomeIcon
           icon={faAngleLeft}
           style={{ cursor: "pointer" }}
           className="me-4 text-light"
         ></FontAwesomeIcon>
-        Chatting with: @user123
+        Chatting with: @Canelo_Álvarez
       </div>
       <ChatMessage message={message} />
       <form
