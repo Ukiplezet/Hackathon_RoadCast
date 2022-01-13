@@ -31,7 +31,6 @@ router.post("/:id", verifyToken, async (req, res) => {
   }
 });
 
-
 const BASE_URL_DS = `http://ec2-3-66-174-245.eu-central-1.compute.amazonaws.com:8080/roadcast`;
 // get -> /search/similar/:id
 // 2. for savedpodcast list
