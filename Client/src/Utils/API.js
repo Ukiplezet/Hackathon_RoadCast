@@ -118,7 +118,7 @@ export default {
       explicit_content: false,
     };
     const response = await axios.post(
-      `${BASE_URL}/search/userpref/${userId}`,
+      `${BASE_URL}/search/similar/${userId}`,
       {
         userId,
         podcastData,

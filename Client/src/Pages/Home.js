@@ -72,9 +72,10 @@ const Home = () => {
       setResultSliderOpen(true);
     }, 3000);
   };
-  
+
   const handleSearchRequest = async (data) => {
     const response = await api.findPodcastBasedOnSearchForm(data);
+    console.log(response.data);
     return setResultsObject(response.results);
   };
 

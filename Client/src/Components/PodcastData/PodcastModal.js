@@ -29,8 +29,9 @@ export default function PodcastModal(props) {
     const storedPodcast = localStorage.setItem("podcast", podcast);
     history.push(`/listeningnow/${userId}/`);
   };
-  const fetchRelatedPodcasts = async (podcast) => {
-    const response = await api.findPodcastBasedOnUserPref(podcast);
+  const fetchRelatedPodcasts = async (props) => {
+    const similarPodcast = props.podcast;
+    const response = await api.findPodcastBasedOnUserPref(similarPodcast);
     console.log(response);
   };
 
@@ -71,11 +72,12 @@ export default function PodcastModal(props) {
               Play This Podcast
             </Button>
             <Button
-              onClick={() => {
+              onClick={async () => {
                 props.HandleOpenPocastModal();
                 props.setShowLoadingSpinner(true);
                 props.setResultSliderOpen(false);
                 props.displaySearchResultsHandler();
+                await fetchRelatedPodcasts(props);
               }}
               variant="dark"
               type="submit"
