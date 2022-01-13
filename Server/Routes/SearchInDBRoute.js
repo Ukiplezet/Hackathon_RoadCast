@@ -38,12 +38,16 @@ const BASE_URL_DS = `http://ec2-3-66-174-245.eu-central-1.compute.amazonaws.com:
 // 2. for savedpodcast list
 router.post("similar/:id", verifyToken, async (req, res) => {
   console.log(req.body);
-  {
-    description_original;
-    title_original; //we get from front end from req.body
-    podcastCategory;
-  }
-  const data = {data: [{description_ep: req.body.description_ep, description_pod: req.body.description_pod, categories: req.body.categories}], time:[req.body.min, req.body.max], batch_size: req.body.batch_size}
+  // {
+  //   description_original;
+  //   title_original; //we get from front end from req.body
+  //   podcastCategory;
+  // }
+  const data = {data: [
+    {description_ep: req.body.description_ep,
+      description_pod: req.body.description_pod,
+      categories: req.body.categories
+    }], time:[req.body.min, req.body.max], batch_size: req.body.batch_size}
   //- description_ep
   //-description_pod
   //- categories;

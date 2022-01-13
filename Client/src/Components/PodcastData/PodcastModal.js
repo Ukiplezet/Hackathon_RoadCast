@@ -7,6 +7,7 @@ import "../../Layout/PodcastModal.css";
 import PodcastCard from "./PodcastCard";
 import { useHistory } from "react-router-dom";
 
+
 export default function PodcastModal(props) {
   const history = useHistory();
   // const { title_original } = props.podcast;

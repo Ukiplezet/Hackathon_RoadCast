@@ -19,6 +19,8 @@ function RowPost({
 }) {
   const [movies, setMovies] = useState([]);
   const [podcastModal, setPodcastModal] = useState(false);
+  const [podcastInfo, setPodcastInfo] = useState({});
+
   useEffect(() => {
     sortResult();
   }, []);
@@ -96,6 +98,7 @@ function RowPost({
         toggleShow={toggleShow}
         HandleOpenPocastModal={openPodcastModal}
         podcastModal={podcastModal}
+        podcastInfo={podcastInfo}
         displaySearchResultsHandler={displaySearchResultsHandler}
         setShowLoadingSpinner={setShowLoadingSpinner}
         setResultSliderOpen={setResultSliderOpen}
