@@ -1,11 +1,20 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { Col } from "react-bootstrap";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 import * as tt from "@tomtom-international/web-sdk-maps";
 import * as ttapi from "@tomtom-international/web-sdk-services";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
-import { convertToPoints, drawRoute, addDestination } from "../Utils/mapFuncs";
+import {
+  convertToPoints,
+  drawRoute,
+  addDestination,
+  markSearchedField,
+} from "../Utils/mapFuncs";
 import GpsArrow from "../media/gps-arrow-orange.png"
+import GpsPin from "../media/gps-pointer.jpeg";
 import { MapContext } from "../Context/MapContext"
 
 function Map() {
@@ -13,6 +22,8 @@ function Map() {
   const [map, setMap] = useState({})
   const { setRouteInfo } = useContext(MapContext)
   const [currentLocationMsg, setCurrentLocationMsg] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [latitude, setLatitude] = useState(32.052797);
   const [longitude, setLongitude] = useState(34.772238);
 
@@ -114,40 +125,55 @@ function Map() {
     return () => tomtomMap.remove();
   }, [longitude, latitude])
 
-  const beginRide = () => {
-    // localStorage.setItem("destinations", destinations)
-    console.log("hi")
+  const search = () => {
+    ttapi.services.fuzzySearch({
+      key: process.env.REACT_APP_TOMTOM_API_KEY,
+      query: searchInput, // Change to state
+      boundingBox: map.getBounds()
+    }).then(results => {
+      if (results.results.length === 0) {
+        console.log("No results")
+      } else {
+        setSearchResults(results.results)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  const handleSearchClick = (result) => {
+    map.flyTo({
+      center: result.position,
+      zoom: 14,
+    });
+    markSearchedField(result.position, map);
   }
 
   return (
     <Col
-      className="map-container center-content shadow-lg pt-2 text-white"
+      className="map-container shadow-lg pt-2 text-white"
       xs={10}
       md={8}
       lg={7}
     >
       <OnHoverScrollContainer>
         {map && <>
-          {currentLocationMsg && <h3>{currentLocationMsg}</h3>}
-          {/* <Col className="search-bar">
-            <input
-              type="text"
-              id="latitude"
-              className="latitude"
-              placeholder="latitude"
-              onChange={(e) => { setLatitude(e.target.value) }}
-            />
-            <input
-              type="text"
-              id="longitude"
-              className="longitude"
-              placeholder="longitude"
-              onChange={(e) => { setLongitude(e.target.value) }}
-            />
-          </Col> */}
-          <div ref={mapEl} className="map" />
-          <div><button onClick={beginRide}>Go</button></div>
-        </>}
+            {currentLocationMsg && <h3>{currentLocationMsg}</h3>}
+            <div ref={mapEl} className="map" />
+          </>}
+        <div>
+          <input type="text" id="query" value={searchInput} onChange={e => { setSearchInput(e.target.value) }} />
+          <button onClick={search}>Search</button>
+          <div className="d-flex justify-content-center">
+            {searchResults && <List className="mapSearchList">
+              {searchResults.map(result => (
+                <ListItemButton key={result.id} name={result} onClick={() => handleSearchClick(result)}>
+                  <ListItemText primary={result.poi.name}/>
+                </ListItemButton>
+              ))}
+            </List>}
+          </div>
+        </div>
       </OnHoverScrollContainer>
     </Col>
   );

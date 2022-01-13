@@ -49,6 +49,19 @@
   height: 18px;
   width: 18px;
   background-color: #F28830;
-  border: 1px solid black;
   border-radius: 9px;
+}
+.searchDestination {
+  display: flex;
+  justify-content: center;
+  padding: 5px 4px;
+  border: 1px solid #D73E2A;
+  background-color: #fff;
+  border-radius: 25px;
+}
+
+.mapSearchList {
+  position: absolute;
+  background-color: #2E3646;
+  min-width: 300px;
 }
