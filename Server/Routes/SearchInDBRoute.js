@@ -10,7 +10,7 @@ const verifyToken = require("../Middleware/auth");
 // post -> /search/:id
 // 1. based on ride form
 router.post("/:id", verifyToken, async (req, res) => {
-  console.log(req.params);
+  console.log(req.body);
   const podcastCategory = req.body.data;
   if (podcastName === "") {
     try {
