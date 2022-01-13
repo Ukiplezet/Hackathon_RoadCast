@@ -50,7 +50,7 @@ router.post("similar/:id", verifyToken, async (req, res) => {
   //batch_size: int;
   try {
     const response = await axios.post(
-      `${BASE_URL_DS}/podcasts/${savedPodcasts[i]}`
+      `${BASE_URL_DS},${data}`
     );
     // put the obejct from response in an object
     return res.status(200).send(response.data);
