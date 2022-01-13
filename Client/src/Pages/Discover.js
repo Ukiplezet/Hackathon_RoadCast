@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Col, Carousel } from "react-bootstrap";
 import "../Layout/DiscoverStyle.css";
-import RowPost from "../Components/NetFlixSlider/RowPost";
+import RowPost2 from "../Components/NetFlixSlider/RowPost2";
 import {
   actions,
   comedy,
@@ -20,18 +20,39 @@ export default function Discover() {
       lg={7}
     >
       <OnHoverScrollContainer>
-        <h1 className="my-3">Discover New &amp; Trending Podcasts</h1>
+        <h2 className="my-3">Discover New &amp; Trending Podcasts</h2>
         <h4>This is based on our talented Data-Science team</h4>
         <h4> and our unique algorithm</h4>
-        <RowPost title="You might also like" isSmall={true} api={originals} />
-        <RowPost title="Random Podcasts" isSmall={true} api={actions} />
-        <RowPost
+        <RowPost2
+          title="You might also like"
+          isSmall={true}
+          api={originals}
+          className="my-5 pb-5"
+          title="Here are your podcasts of interest:"
+          isSmall={false}
+        />
+        <RowPost2 title="Random Podcasts" isSmall={true} api={actions} />
+        <RowPost2
           title="Cannabis related podcasts"
           isSmall={true}
           api={romance}
         />
-        <RowPost title="Javascript podcasts" isSmall={true} api={comedy} />
-        <RowPost title="Python podcasts" isSmall={true} api={horror} />
+        <RowPost2
+          title="Javascript podcasts"
+          isSmall={true}
+          api={comedy}
+          className="my-5 pb-5"
+          title="Here are your podcasts of interest:"
+          isSmall={false}
+        />
+        <RowPost2
+          title="Python podcasts"
+          isSmall={true}
+          api={horror}
+          className="my-5 pb-5"
+          title="Here are your podcasts of interest:"
+          isSmall={false}
+        />
       </OnHoverScrollContainer>
     </Col>
   );

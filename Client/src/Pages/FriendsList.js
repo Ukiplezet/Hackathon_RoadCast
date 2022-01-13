@@ -11,7 +11,7 @@ export default function FriendsList() {
       lg={7}
     >
       <OnHoverScrollContainer>
-        <h1>Work In Progress</h1>
+        <h2>Work In Progress</h2>
         <h4>In the meanwhile you can go out-side and enjoy the weather</h4>
         <h5>(something I didn't do because of the hackathon...)</h5>
         <img

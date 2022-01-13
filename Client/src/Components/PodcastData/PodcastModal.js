@@ -9,18 +9,21 @@ import { useHistory } from "react-router-dom";
 
 export default function PodcastModal(props) {
   const history = useHistory();
-  const { title_original, id } = props.podcast;
+  // const { title_original } = props.podcast;
+  const {
+    id,
+    title_original,
+    podcastCategory,
+    description_original,
+    episodeDescription,
+    pub_date_ms,
+    audio_length_sec,
+    rating,
+    audio,
+    genre_ids,
+    thumbnail,
+  } = props.podcast;
 
-  /* // id={element.id}
-      // podcastCategory={element.podcast.genre_ids}
-      // podcastName={element.title_original}
-      // picture={element.podcast.thumbnail}
-      // podcastDescription={element.description_original}
-      // episodeDescription={element.episodeDescription}
-      // date={element.pub_date_ms}
-      // length={element.audio_length_sec}
-      // rating={element.rating}
-      // audio={element.autio} */
   const playSelectedPodcast = async (podcast) => {
     const userId = localStorage.getItem("id");
     const storedPodcast = localStorage.setItem("podcast", podcast);

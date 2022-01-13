@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Button, Card, Row } from "react-bootstrap";
 import "../../Layout/PodcastModal.css";
 
-function PodcastCard(podcast) {
+function PodcastCard(props) {
   const {
     id,
     title_original,
@@ -17,7 +17,7 @@ function PodcastCard(podcast) {
     audio,
     genre_ids,
     thumbnail,
-  } = podcast;
+  } = props.podcast;
 
   return (
     <Card className="podcast-card d-flex flex-row-nowrap pt-3 justify-content-start">
