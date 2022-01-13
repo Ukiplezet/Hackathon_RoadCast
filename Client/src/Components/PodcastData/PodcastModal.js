@@ -6,6 +6,8 @@ import React, { useState, useContext } from "react";
 import "../../Layout/PodcastModal.css";
 import PodcastCard from "./PodcastCard";
 import { useHistory } from "react-router-dom";
+
+
 export default function PodcastModal(props) {
   const history = useHistory();
   //   const {
@@ -28,7 +30,7 @@ export default function PodcastModal(props) {
         <Modal.Header className=" podcast-modal-header d-flex justify-content-center">
           <Modal.Title className="text-light">podcastName</Modal.Title>
         </Modal.Header>
-        <PodcastCard props={props} />
+        <PodcastCard podcastInfo={props.podcastInfo} />
         <Card.Footer className="podcast-modal-footer">
           <Col className="flex-row d-flex pb-0 justify-content-evenly">
             <Button

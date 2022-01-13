@@ -13,6 +13,7 @@ import api from "../Utils/API";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { Puff } from "react-loader-spinner";
 import Welcome from "../Components/Welcome";
+
 const Home = () => {
   const { user, setUser, logout } = useContext(UserContext);
   const [modalOpen, setModalOpen] = useState(false);

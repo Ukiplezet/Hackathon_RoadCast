@@ -19,6 +19,8 @@ function RowPost({
   const [movies, setMovies] = useState([]);
   const [videoKey, setVideoKey] = useState();
   const [podcastModal, setPodcastModal] = useState(false);
+  const [podcastInfo, setPodcastInfo] = useState({});
+
   useEffect(() => {
     Axios.get(api)
       .then((response) => {
@@ -41,21 +43,7 @@ function RowPost({
 
     console.log(videoKey);
   };
-  let display = movies.map((item, index) => {
-    return (
-      <img
-        key={index}
-        onClick={() => handleMovieClick(item)}
-        className={isSmall ? "small-poster" : "poster"}
-        src={imageUrl + item.backdrop_path}
-        alt=""
-      />
-    );
-  });
-  const handleShow = () => {
-    setVideoKey(undefined);
-  };
-
+  
   const openPodcastModal = () => {
     if (!podcastModal) {
       setPodcastModal(true);
@@ -64,17 +52,40 @@ function RowPost({
     }
   };
 
+  const clickPicHandler = (item) => {
+    setPodcastInfo(item);
+    if (!podcastModal) { setPodcastModal(true) }
+    else { setPodcastModal(false);
+    }
+  }
+
+  let display = movies.map((item, index) => {
+    return (
+      <div key={index} value={item} onClick={() => clickPicHandler(item)}>
+        <img
+          onClick={() => handleMovieClick(item)}
+          className={isSmall ? "small-poster" : "poster"}
+          src={imageUrl + item.backdrop_path}
+          alt=""
+        />
+      </div>
+    );
+  });
+  const handleShow = () => {
+    setVideoKey(undefined);
+  };
+
   return (
     <>
-      <div className="row w-75 d-flex" onClick={openPodcastModal}>
+      <div className="row w-75 d-flex" /* onClick={openPodcastModal} */>
         <h5 className="text-start my-1">{title}</h5>
 
-        <div className="posters" onClick={openPodcastModal}>
+        <div className="posters" /* onClick={openPodcastModal} */>
           {movies && display}{" "}
         </div>
         <div
           className={videoKey ? "close-icon" : "hide-icon"}
-          onClick={openPodcastModal}
+          /* onClick={openPodcastModal} */
         >
           <img src={close} alt="close" />
         </div>
@@ -86,6 +97,7 @@ function RowPost({
         toggleShow={toggleShow}
         HandleOpenPocastModal={openPodcastModal}
         podcastModal={podcastModal}
+        podcastInfo={podcastInfo}
         displaySearchResultsHandler={displaySearchResultsHandler}
         setShowLoadingSpinner={setShowLoadingSpinner}
         setResultSliderOpen={setResultSliderOpen}

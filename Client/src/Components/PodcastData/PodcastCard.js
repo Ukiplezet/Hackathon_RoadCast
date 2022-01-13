@@ -4,13 +4,15 @@ import { Col, Button, Card, Row } from "react-bootstrap";
 import "../../Layout/PodcastModal.css";
 
 function PodcastCard(props) {
+  const { name, backdrop_path } = props.podcastInfo;
+  console.log(backdrop_path);
   return (
     <Card className="podcast-card d-flex flex-row-nowrap pt-3 justify-content-start">
       <Col className="d-flex flex-col">
         <Card.Img
           style={{ width: "600px", height: "480px" }}
           variant="top"
-          src={"picture"}
+          src={`http:localhost:3000/${backdrop_path}`}
           alt={"this is a photo of the podcast"}
           className="d-flex flex-col ms-4 ps-3 my-4 border-2 border border-grey align-self-center text-light"
         />
@@ -20,7 +22,7 @@ function PodcastCard(props) {
               <div>
                 <Card.Title className="mb-3">
                   <strong>podcastName: </strong>
-                  podcastName
+                  {name}
                 </Card.Title>
                 <i>
                   <strong>Podcast Description: </strong>
