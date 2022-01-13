@@ -10,13 +10,10 @@ async function loginUser(email, password) {
     }
     const dbUser = await UserModel.findOne({ email });
     if (dbUser && (await bcrypt.compare(password, dbUser.password))) {
-      const token = jwt.sign({ user_id: dbUser._id }, process.env.TOKEN_KEY, {
+      let token = jwt.sign({ user_id: dbUser._id }, process.env.TOKEN_KEY, {
         expiresIn: "2h",
-      }, (err, token) => {
-        if (err) { console.log(err) }
-        res.send(token);
       });
-      console.log(token)
+      console.log(token);
       dbUser.token = token;
       return dbUser;
     }
@@ -43,7 +40,7 @@ async function addNewUser(email, firstName, lastName, password, phoneNumber) {
     bio: "",
   });
 
-  const token = jwt.sign({ user_id: dbUser._id }, process.env.TOKEN_KEY, {
+  let token = jwt.sign({ user_id: dbUser._id }, process.env.TOKEN_KEY, {
     expiresIn: "2h",
   });
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Col, ListGroup } from "react-bootstrap";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 import RowPost from "../Components/NetFlixSlider/RowPost";
-import { originals } from "../Components/constants/urls";
+import { comedy } from "../Components/constants/urls";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function SavedPodcasts() {
@@ -20,7 +20,7 @@ export default function SavedPodcasts() {
           className="mb-5 pb-5"
           title="List of saved podcasts"
           isSmall={false}
-          api={originals}
+          api={comedy}
         />
       </OnHoverScrollContainer>
     </Col>
