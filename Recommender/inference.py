@@ -15,16 +15,15 @@ import gensim.downloader
 import ssl
 import ast
 
-
 LOCAL_RUN = False
 AWS_PORT = 8080
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-# download('stopwords')
-# download('punkt')
-# download('wordnet')
-# download('omw-1.4')
+download('stopwords')
+download('punkt')
+download('wordnet')
+download('omw-1.4')
 
 STOPWORDS = set(stopwords.words('english'))
 MIN_WORDS = 4
@@ -39,8 +38,6 @@ PATTERN_PUNC = re.compile(r"[^\w\s]")  # matches all non 0-9 A-z whitespace
 model = gensim.downloader.load('glove-wiki-gigaword-50')
 # get the dataset
 df = pd.read_csv('podcasts_sampled.csv')
-
-# df.drop(columns='un')
 
 df['tok_lem_desc'] = df['tok_lem_desc'].apply(ast.literal_eval)
 df['tok_lem_categories'] = df['tok_lem_categories'].apply(ast.literal_eval)
@@ -141,12 +138,11 @@ def get_k_similar_podcasts(data, query_pod, k=5):
                                                          args=(query_pod['tok_lem_desc'],))
     data['weighted_similarity'] = (data['similarity_category'] * 0.3 + data['similarity_desc'] * 0.7) / 2
 
-    return data[COLS_TO_RETURN].nlargest(50, columns=['weighted_similarity']).sample(k)
+    return data[COLS_TO_RETURN].nlargest(50, columns=['weighted_similarity']).sample(k).reset_index()
 
 
 @app.route('/roadcast', methods=['POST'])
 def recommendation():
-    # return 'Recommendation page'
     if request.method == 'POST':  # and request.is_json:
         print('if')
 
@@ -165,16 +161,10 @@ def recommendation():
         return_data = get_k_similar_podcasts(sub_df, cleaned_data, k=rec_number)
         return_data = return_data.to_json()
 
-
-
     else:
         return 'got into else'
 
         data = 'incorrect'
-        # return 'incorrect'
-        # for pod in data:
-        # cleaned_data = clean_input_data()
-        # recs = model.top_k_recs()
 
     response_body = {
         'message': 'JSON received',
@@ -190,4 +180,3 @@ if __name__ == '__main__':
         app.run(debug=True)
     else:
         app.run(host='0.0.0.0', port=AWS_PORT)
-
