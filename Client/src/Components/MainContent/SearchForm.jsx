@@ -36,7 +36,6 @@ export default function SearchForm(props) {
   const [podcastCategory, setPodcastCategory] = useState([]);
   const [podcastName, setPodcastName] = useState([]);
   const [listOfPodcasts, setListOfPodcasts] = useState([]);
-<<<<<<< HEAD
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -71,8 +70,6 @@ export default function SearchForm(props) {
     setDestination(event.target.value);
     console.log(event.target.value);
   };
-=======
->>>>>>> 025bbb6c9f6207db4a889249320d96b1e1a55311
 
   const podcastCategoryOnChange = (event) => {
     const {
@@ -87,13 +84,11 @@ export default function SearchForm(props) {
     console.log(event.target.value);
   };
 
-<<<<<<< HEAD
   const transportationOnChange = (event) => {
     setTransportation(event.target.value);
     console.log(event.target.value);
   };
 
-=======
   // // probably will need to change the endpoint later
   // useEffect(() => {
   //   axios
@@ -109,7 +104,6 @@ export default function SearchForm(props) {
   // }, []);
 
   // not sure setRequest is the right choice here
->>>>>>> 025bbb6c9f6207db4a889249320d96b1e1a55311
   const handleSubmit = async (e) => {
     e.preventDefault();
 
