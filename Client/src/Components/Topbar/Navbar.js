@@ -74,7 +74,7 @@ function Navbar() {
           width="60"
           height="60"
           frameBorder="0"
-          class="giphy-embed pt-2"
+          className="giphy-embed pt-2"
           allowFullScreen
         ></iframe>
       </div>
