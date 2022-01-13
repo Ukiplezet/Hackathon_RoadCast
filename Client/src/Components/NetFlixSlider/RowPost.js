@@ -17,7 +17,6 @@ function RowPost({
   resultsObject,
 }) {
   const [movies, setMovies] = useState([]);
-  const [videoKey, setVideoKey] = useState();
   const [podcastModal, setPodcastModal] = useState(false);
   useEffect(() => {
     sortResult();
@@ -29,7 +28,6 @@ function RowPost({
     return (
       <img
         key={index.id}
-        // onClick={() => handleMovieClick(item)}
         className={isSmall ? "small-poster" : "poster"}
         src={item.podcast.thumbnail}
         alt=""
@@ -46,29 +44,29 @@ function RowPost({
 
   return (
     <>
-      <div className="row w-75 d-flex" onClick={openPodcastModal}>
+      <div className="row w-75 d-flex">
         <h5 className="text-start my-1"></h5>
 
         <div className="posters" onClick={openPodcastModal}>
           {resultsObject && display}{" "}
         </div>
-        <div
-          className={videoKey ? "close-icon" : "hide-icon"}
-          onClick={openPodcastModal}
-        >
-          <img src={close} alt="close" />
-        </div>
       </div>
-
-      <PodcastModal
-        toggleShow={toggleShow}
-        HandleOpenPocastModal={openPodcastModal}
-        podcastModal={podcastModal}
-        displaySearchResultsHandler={displaySearchResultsHandler}
-        setShowLoadingSpinner={setShowLoadingSpinner}
-        setResultSliderOpen={setResultSliderOpen}
-        resultsObject={resultsObject}
-      />
+      {resultsObject &&
+        resultsObject.length > 0 &&
+        resultsObject.map((val, podcast) => {
+          return (
+            <PodcastModal
+              key={val.id}
+              toggleShow={toggleShow}
+              HandleOpenPocastModal={openPodcastModal}
+              podcastModal={podcastModal}
+              displaySearchResultsHandler={displaySearchResultsHandler}
+              setShowLoadingSpinner={setShowLoadingSpinner}
+              setResultSliderOpen={setResultSliderOpen}
+              podcast={val}
+            />
+          );
+        })}
     </>
   );
 }

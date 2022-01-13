@@ -219,14 +219,23 @@ export default function SearchForm(props) {
           </Button>
         </Card>
       </Container>
-      {/* <RowPost
+      {/* {/* <RowPost
         className="my-5 pb-5"
         title="Here are your podcasts of interest:"
         isSmall={false}
         resultsObject={resultsObject}
         setResultsObject={setResultsObject} */}
+      {/* // id={element.id}
+      // podcastCategory={element.podcast.genre_ids}
+      // podcastName={element.title_original}
+      // picture={element.podcast.thumbnail}
+      // podcastDescription={element.description_original}
+      // episodeDescription={element.episodeDescription}
+      // date={element.pub_date_ms}
+      // length={element.audio_length_sec}
+      // rating={element.rating}
+      // audio={element.autio} */}
       {/* /> */}
-
     </>
   );
 }
