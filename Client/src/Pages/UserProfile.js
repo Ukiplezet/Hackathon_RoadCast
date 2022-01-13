@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-// import "../App.css";
+import "../App.css";
 import { Card, ListGroup, Col } from "react-bootstrap";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,13 +31,12 @@ export default function UserProfile() {
 
   const getUpdatedUserData = async (userId) => {
     const response = await api.getUserById(userId);
-    setUser(response);
+    // setUser(response);
     setFirstName(response.firstName);
     setLastName(response.lastName);
     setEmail(response.email);
     setPhoneNumber(response.phoneNumber);
     setBio(response.bio);
-    setFirstRender(false);
   };
 
   useEffect(() => {

@@ -35,7 +35,6 @@ function Navbar() {
       userId = user._id;
       const response = await api.getUserById(userId);
       console.log(`1`, response);
-      setUser(response);
       setFirstName(response.firstName);
       setLastName(response.lastName);
       history.push(`/${response._id}`);
@@ -60,44 +59,38 @@ function Navbar() {
         <FontAwesomeIcon
           icon={faAngleLeft}
           style={{ cursor: "pointer" }}
-          className="ms-4 mt-2 text-light"
+          className="ms-4  text-light"
           onClick={() => history.goBack()}
         ></FontAwesomeIcon>
         <FontAwesomeIcon
           icon={faAngleRight}
           style={{ cursor: "pointer" }}
-          className="ms-4 me-5 mt-2 text-light"
+          className="ms-4 me-5 text-light"
           onClick={() => history.goForward()}
         ></FontAwesomeIcon>
 
-        <img
-          style={{ height: "40px" }}
-          src="https://www.howtogeek.com/wp-content/uploads/2018/10/preview-12.png?width=1198&trim=1,1&bg-color=000&pad=1,1"
-          alt="Logo"
-          className="text-light"
-        />
+        <iframe
+          src="https://giphy.com/embed/5hmgcmc5xIsmBq2YtT"
+          width="60"
+          height="60"
+          frameBorder="0"
+          class="giphy-embed pt-2"
+          allowFullScreen
+        ></iframe>
       </div>
 
       {user.auth ? (
         <>
-          <div>
-            <input className="rounded-pill me-2" style={{ width: "550px" }} />
-            <FontAwesomeIcon
-              icon={faSearch}
-              style={{ cursor: "pointer" }}
-              className="me-5 mt-2 text-light"
-            ></FontAwesomeIcon>
-          </div>
           <div className="d-flex flex-row ">
             <img
               className="rounded me-3 mt-2"
               src="https://www.placecage.com/30/30"
               style={{ height: "30px" }}
             />
-            <span className="me-5 mt-2 pt-1 fs-6">
+            <span className="me-5 m pt-1 fs-6">
               {user.firstName} {user.lastName}
             </span>
-            <div className="d-flex pt-1 flex-row">
+            <div className="d-flex  flex-row">
               <FontAwesomeIcon
                 icon={faSignOutAlt}
                 onClick={(e) => {
@@ -106,7 +99,7 @@ function Navbar() {
                   localStorage.clear();
                 }}
                 style={{ cursor: "pointer" }}
-                className="me-5 mt-2 text-light"
+                className="me-5  text-light"
               ></FontAwesomeIcon>
             </div>
           </div>
@@ -122,7 +115,7 @@ function Navbar() {
         >
           <FontAwesomeIcon
             icon={faSignInAlt}
-            className="me-5 mt-2 text-light"
+            className="me-5 text-light"
           ></FontAwesomeIcon>
         </div>
       )}

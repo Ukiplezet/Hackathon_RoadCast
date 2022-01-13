@@ -7,7 +7,15 @@ import ShowTrailer from "./ShowTrailer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PodcastModal from "../PodcastData/PodcastModal";
 
-function RowPost({ title, isSmall, api }) {
+function RowPost({
+  displaySearchResultsHandler,
+  setShowLoadingSpinner,
+  setResultSliderOpen,
+  toggleShow,
+  title,
+  isSmall,
+  api,
+}) {
   const [movies, setMovies] = useState([]);
   const [videoKey, setVideoKey] = useState();
   const [podcastModal, setPodcastModal] = useState(false);
@@ -75,8 +83,12 @@ function RowPost({ title, isSmall, api }) {
         {videoKey && <ShowTrailer videoKey={videoKey} />}
       </div> */}
       <PodcastModal
+        toggleShow={toggleShow}
         HandleOpenPocastModal={openPodcastModal}
         podcastModal={podcastModal}
+        displaySearchResultsHandler={displaySearchResultsHandler}
+        setShowLoadingSpinner={setShowLoadingSpinner}
+        setResultSliderOpen={setResultSliderOpen}
       />
     </>
   );
