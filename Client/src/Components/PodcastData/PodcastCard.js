@@ -4,6 +4,18 @@ import { Col, Button, Card, Row } from "react-bootstrap";
 import "../../Layout/PodcastModal.css";
 
 function PodcastCard(props) {
+  // const {
+  //   id,
+  //   title_original,
+  //   podcastCategory,
+  //   description_original,
+  //   episodeDescription,
+  //   pub_date_ms,
+  //   audio_length_sec,
+  //   rating,
+  //   autio,
+  // } = props.index.resultsObject;
+  // const { genre_ids, thumbnail } = props.index.resultsObject.podcast;
   return (
     <Card className="podcast-card d-flex flex-row-nowrap pt-3 justify-content-start">
       <Col className="d-flex flex-col">
@@ -54,7 +66,6 @@ function PodcastCard(props) {
           </Card.Text>
         </Card.Body>
       </Col>
-
     </Card>
   );
 }

@@ -20,7 +20,7 @@ const Home = () => {
   const [showSearchForm, setShowSearchForm] = useState(true);
   const [showLoadingSpinner, setShowLoadingSpinner] = useState(false);
   const [show, toggleShow] = useState(false);
-
+  const [resultsObject, setResultsObject] = useState([]);
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const history = useHistory();
@@ -72,6 +72,11 @@ const Home = () => {
       setResultSliderOpen(true);
     }, 3000);
   };
+  
+  const handleSearchRequest = async (data) => {
+    const response = await api.findPodcastBasedOnSearchForm(data);
+    return setResultsObject(response.results);
+  };
 
   useEffect(() => {
     try {
@@ -102,6 +107,7 @@ const Home = () => {
               <SearchForm
                 showSearchFormHandler={showSearchFormHandler}
                 displaySearchResultsHandler={displaySearchResultsHandler}
+                handleSearchRequest={handleSearchRequest}
               />
             </>
           ) : (
@@ -126,11 +132,11 @@ const Home = () => {
                   className="my-5 pb-5"
                   title="Here are your podcasts of interest:"
                   isSmall={false}
-                  api={originals}
                   toggleShow={toggleShow}
                   setShowLoadingSpinner={setShowLoadingSpinner}
                   displaySearchResultsHandler={displaySearchResultsHandler}
                   setResultSliderOpen={setResultSliderOpen}
+                  resultsObject={resultsObject}
                 />
                 <Button
                   variant="success"

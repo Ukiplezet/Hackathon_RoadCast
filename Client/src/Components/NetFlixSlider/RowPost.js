@@ -14,48 +14,28 @@ function RowPost({
   toggleShow,
   title,
   isSmall,
-  api,
+  resultsObject,
 }) {
   const [movies, setMovies] = useState([]);
   const [videoKey, setVideoKey] = useState();
   const [podcastModal, setPodcastModal] = useState(false);
   useEffect(() => {
-    Axios.get(api)
-      .then((response) => {
-        setMovies(response.data.results);
-      })
-      .catch((err) => {
-        alert("Network Error");
-      });
-  }, [api]);
-
-  const handleMovieClick = (item) => {
-    Axios.get(`${baseUrl}/movie/${item.id}/videos?api_key=${API_KEY}`)
-      .then((response) => {
-        let videoData = response.data.results[0];
-        setVideoKey(videoData.key);
-      })
-      .catch((err) => {
-        console.log("Video is not found..,Please choose another Movie...");
-      });
-
-    console.log(videoKey);
+    sortResult();
+  }, []);
+  const sortResult = async () => {
+    setMovies(resultsObject);
   };
-  let display = movies.map((item, index) => {
+  let display = resultsObject.map((item, index) => {
     return (
       <img
-        key={index}
-        onClick={() => handleMovieClick(item)}
+        key={index.id}
+        // onClick={() => handleMovieClick(item)}
         className={isSmall ? "small-poster" : "poster"}
-        src={imageUrl + item.backdrop_path}
+        src={item.podcast.thumbnail}
         alt=""
       />
     );
   });
-  const handleShow = () => {
-    setVideoKey(undefined);
-  };
-
   const openPodcastModal = () => {
     if (!podcastModal) {
       setPodcastModal(true);
@@ -67,10 +47,10 @@ function RowPost({
   return (
     <>
       <div className="row w-75 d-flex" onClick={openPodcastModal}>
-        <h5 className="text-start my-1">{title}</h5>
+        <h5 className="text-start my-1"></h5>
 
         <div className="posters" onClick={openPodcastModal}>
-          {movies && display}{" "}
+          {resultsObject && display}{" "}
         </div>
         <div
           className={videoKey ? "close-icon" : "hide-icon"}
@@ -79,9 +59,7 @@ function RowPost({
           <img src={close} alt="close" />
         </div>
       </div>
-      {/* <div className="show-container">
-        {videoKey && <ShowTrailer videoKey={videoKey} />}
-      </div> */}
+
       <PodcastModal
         toggleShow={toggleShow}
         HandleOpenPocastModal={openPodcastModal}
@@ -89,6 +67,7 @@ function RowPost({
         displaySearchResultsHandler={displaySearchResultsHandler}
         setShowLoadingSpinner={setShowLoadingSpinner}
         setResultSliderOpen={setResultSliderOpen}
+        resultsObject={resultsObject}
       />
     </>
   );
