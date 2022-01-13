@@ -138,7 +138,7 @@ def get_k_similar_podcasts(data, query_pod, k=5):
                                                          args=(query_pod['tok_lem_desc'],))
     data['weighted_similarity'] = (data['similarity_category'] * 0.3 + data['similarity_desc'] * 0.7) / 2
 
-    return data[COLS_TO_RETURN].nlargest(50, columns=['weighted_similarity']).sample(k).reset_index()
+    return data[COLS_TO_RETURN].nlargest(50, columns=['weighted_similarity']).sample(k).reset_index(drop=True)
 
 
 @app.route('/roadcast', methods=['POST'])
