@@ -63,20 +63,38 @@
   border-radius: 25px;
 }
 
-.mapSearchList {
-  position: absolute;
+.mapSearch {
   background-color: #2E3646;
+  border-radius: 10px;
+}
+
+.mapSearch:focus {
+  background-color: #2E3646;
+  border-radius: 10px;
+}
+
+.mapSearchList {
+  background-color: #fff;
   min-width: 300px;
+  outline: none;
+}
+
+.mapBtnContainer {
+  display: flex;
+  align-items: center;
+  background-color: #2E3646;
+  border-radius: 5px;
 }
 
 .mapBtn {
   padding: 0;
   position: absolute;
-  top: 520px;
+  top: 480px;
   left: 640px;
 }
 
 .mapSnackBar {
   display: flex;
   width: 370px;
+  margin-left: 50px;
 }

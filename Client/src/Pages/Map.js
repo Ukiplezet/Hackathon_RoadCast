@@ -4,7 +4,10 @@ import { Col } from "react-bootstrap";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Popover from "@mui/material/Popover";
 import SnackbarContent from "@mui/material/SnackbarContent";
 import OnHoverScrollContainer from "../Components/CostumScrollBar/CostumScrollDiv";
 import * as tt from "@tomtom-international/web-sdk-maps";
@@ -17,13 +20,19 @@ import { MapContext } from "../Context/MapContext"
 function Map() {
   const mapEl = useRef()
   const history = useHistory()
-  const [map, setMap] = useState({})
   const { routeInfo, setRouteInfo } = useContext(MapContext)
+  
+  const [map, setMap] = useState({})
   const [currentLocationMsg, setCurrentLocationMsg] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  
   const [latitude, setLatitude] = useState(32.052797);
   const [longitude, setLongitude] = useState(34.772238);
+
+  const handleSearchPopUpClose = () => { setAnchorEl(null) };
+  const searchPopUpOpen = Boolean(anchorEl);
 
   useEffect(() => {
       navigator.geolocation.watchPosition((position) => {
@@ -123,7 +132,8 @@ function Map() {
     return () => tomtomMap.remove();
   }, [longitude, latitude]);
 
-  const search = () => {
+  const search = (event) => {
+    setAnchorEl(event.currentTarget);
     ttapi.services.fuzzySearch({
       key: process.env.REACT_APP_TOMTOM_API_KEY,
       query: searchInput,
@@ -140,10 +150,7 @@ function Map() {
   }
 
   const handleSearchClick = (result) => {
-    map.flyTo({
-      center: result.position,
-      zoom: 14,
-    });
+    map.flyTo({ center: result.position, zoom: 14 });
     markSearchedField(result.position, map);
   }
 
@@ -162,20 +169,38 @@ function Map() {
     >
       <OnHoverScrollContainer>
         <div>
-          <input type="text" id="query" value={searchInput} onChange={e => { setSearchInput(e.target.value) }} />
-          <button onClick={search}>Search</button>
+          <Box sx={{ display: "flex", alignItems: "center"}}>
+            <TextField type="search" id="query" className="mapSearch" value={searchInput} onChange={e => { setSearchInput(e.target.value) }} />
+            <Button onClick={search}>Search</Button>
+            <SnackbarContent message={currentLocationMsg} className="mapSnackBar"/>
+          </Box>
           <div className="d-flex justify-content-center">
-            {searchResults && <List className="mapSearchList">
-              {searchResults.map(result => (
-                <ListItemButton key={result.id} name={result} onClick={() => handleSearchClick(result)}>
-                  <ListItemText primary={result.poi.name}/>
-                </ListItemButton>
-              ))}
-            </List>}
+            {searchResults && 
+              <Popover
+                  open={searchPopUpOpen}
+                  anchorEl={anchorEl}
+                  onClose={handleSearchPopUpClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  // transformOrigin={{
+                  //   vertical: 'top',
+                  //   horizontal: 'left',
+                  // }}
+                >
+                <List className="mapSearchList">
+                  {searchResults.map(result => (
+                    <ListItemButton key={result.id} name={result} onClick={() => handleSearchClick(result)}>
+                      <ListItemText primary={result.poi.name}/>
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Popover>
+            }
           </div>
         </div>
         {map && <>
-            <SnackbarContent message={currentLocationMsg} className="mapSnackBar"/>
             <div ref={mapEl} className="map" />
             <div className="mapBtn">
               <Button
