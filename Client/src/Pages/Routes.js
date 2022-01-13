@@ -18,9 +18,9 @@ function Routes() {
     return (
       <Layout>
         <Switch>
+          <Route exact path="/map/:loggedId" component={Map} />
           <Route exact path="/:loggedId" component={Home} />
           <Route exact path="/userprofile/:loggedId" component={UserProfile} />
-          <Route exact path="/map/:loggedId" component={Map} />
           <Route
             exact
             path="/listeningnow/:loggedId"

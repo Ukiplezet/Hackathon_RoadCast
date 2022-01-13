@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./SearchForm";
 import api from "../../Utils/API";
 import { Button, Container } from "react-bootstrap";
@@ -15,7 +15,10 @@ import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { scroller } from "react-scroll";
 import PodcastCard from "../PodcastData/PodcastCard";
+import { MapContext } from "../../Context/MapContext";
 import RowPost from "../NetFlixSlider/RowPost";
+import { MenuProps, podcastOptions} from "./SearchFormStyles"
+
 // {
 //   FormData: {
 //       startingPoint: "hadera",
@@ -27,12 +30,11 @@ import RowPost from "../NetFlixSlider/RowPost";
 // }
 
 export default function SearchForm(props) {
+  const { routeInfo } = useContext(MapContext);
+  console.log(routeInfo);
   const [request, setRequest] = useState(false);
-  const [startingPoint, setStartingPoint] = useState("");
-  const [destination, setDestination] = useState("");
   const [podcastCategory, setPodcastCategory] = useState([]);
   const [podcastName, setPodcastName] = useState([]);
-  const [transportation, setTransportation] = useState("Car");
   const [listOfPodcasts, setListOfPodcasts] = useState([]);
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -87,15 +89,31 @@ export default function SearchForm(props) {
     console.log(event.target.value);
   };
 
+  // // probably will need to change the endpoint later
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5500/podcasts", {
+  //       headers: {
+  //         accessToken: localStorage.getItem("accessToken"),
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setListOfPodcasts(response.data);
+  //       console.log(response.data);
+  //     });
+  // }, []);
+
+  // not sure setRequest is the right choice here
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
 
-    formData.append("startingPoint", startingPoint);
-    formData.append("destination", destination);
+    formData.append("travelDuration", routeInfo.travelTimeInSeconds);
+    formData.append("distanceInMeters", routeInfo.lengthInMeters);
+    formData.append("arrivalTime", routeInfo.arrivalTime);
+    formData.append("departureTime", routeInfo.departureTime);
     formData.append("podcastCategory", podcastCategory);
-    formData.append("transportation", transportation);
     formData.append("podcastName", podcastName);
     const data = {};
     for (let field of formData) {
@@ -119,60 +137,18 @@ export default function SearchForm(props) {
           className="SearchFormBox searchPaper"
           elevation={3}
           style={{
+            padding: 5,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             width: 800,
-            height: 600,
+            height: 280,
             borderRadius: "2%",
             marginTop: "2rem",
             marginLeft: "2rem",
           }}
         >
-          <InputLabel className="searchForm" id="demo-simple-select-label">
-            Starting point
-          </InputLabel>
-          <TextField
-            style={{ width: "20rem" }}
-            className=""
-            id="startingPoint"
-            label="Starting Point"
-            value={startingPoint}
-            onChange={startingPointOnChange}
-            required
-          />
-          <InputLabel className="searchForm" id="demo-simple-select-label">
-            Choose your destination
-          </InputLabel>
-          <TextField
-            style={{ width: "20rem" }}
-            className=""
-            id="destination"
-            label="Destination"
-            value={destination}
-            onChange={destinationOnChange}
-            required
-          />
-          <InputLabel className="searchForm" id="demo-simple-select-label">
-            How are you getting there?
-          </InputLabel>
-          <Select
-            style={{ width: "8rem" }}
-            defaultValue="Car"
-            label="Transportation"
-            className=""
-            id="transportation"
-            required
-            onChange={transportationOnChange}
-          >
-            <MenuItem value="Car">Car</MenuItem>
-            <MenuItem value="Bus">Bus</MenuItem>
-            <MenuItem value="Train">Train</MenuItem>
-            <MenuItem value="Bicycle">Bicycle</MenuItem>
-            <MenuItem value="Scooter">Scooter</MenuItem>
-            <MenuItem value="I'll walk">I'll walk</MenuItem>
-          </Select>
           <InputLabel className="searchForm" id="demo-simple-select-label">
             Choose category
           </InputLabel>
@@ -219,23 +195,6 @@ export default function SearchForm(props) {
           </Button>
         </Card>
       </Container>
-      {/* {/* <RowPost
-        className="my-5 pb-5"
-        title="Here are your podcasts of interest:"
-        isSmall={false}
-        resultsObject={resultsObject}
-        setResultsObject={setResultsObject} */}
-      {/* // id={element.id}
-      // podcastCategory={element.podcast.genre_ids}
-      // podcastName={element.title_original}
-      // picture={element.podcast.thumbnail}
-      // podcastDescription={element.description_original}
-      // episodeDescription={element.episodeDescription}
-      // date={element.pub_date_ms}
-      // length={element.audio_length_sec}
-      // rating={element.rating}
-      // audio={element.autio} */}
-      {/* /> */}
     </>
   );
 }

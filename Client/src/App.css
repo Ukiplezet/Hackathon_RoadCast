@@ -23,6 +23,9 @@
   margin: 1rem 0 0.5rem 0 !important;
 }
 
+.SearchFormBox {
+  background-color: #343435;
+}
 
 /* Map */
 .map-container {
@@ -32,13 +35,14 @@
 .map{
   margin-top: 5px;
   height: 500px;
-  width: 700px;
+  width: 750px;
+  overflow: hidden;
 }
 
 .locationMarker {
   display: flex;
   justify-content: center;
-  padding: 6px;
+  padding: 7px 5px;
   background-color: #F6F6F6;
   border: 1px solid #F28830;
   border-radius: 25px;
@@ -48,6 +52,49 @@
   height: 18px;
   width: 18px;
   background-color: #F28830;
-  border: 1px solid black;
   border-radius: 9px;
+}
+.searchDestination {
+  display: flex;
+  justify-content: center;
+  padding: 5px 4px;
+  border: 1px solid #D73E2A;
+  background-color: #fff;
+  border-radius: 25px;
+}
+
+.mapSearch {
+  background-color: #2E3646;
+  border-radius: 10px;
+}
+
+.mapSearch:focus {
+  background-color: #2E3646;
+  border-radius: 10px;
+}
+
+.mapSearchList {
+  background-color: #fff;
+  min-width: 300px;
+  outline: none;
+}
+
+.mapBtnContainer {
+  display: flex;
+  align-items: center;
+  background-color: #2E3646;
+  border-radius: 5px;
+}
+
+.mapBtn {
+  padding: 0;
+  position: absolute;
+  top: 480px;
+  left: 640px;
+}
+
+.mapSnackBar {
+  display: flex;
+  width: 370px;
+  margin-left: 50px;
 }
