@@ -26,6 +26,10 @@ export default function PodcastModal(props) {
     const storedPodcast = localStorage.setItem("podcast", podcast);
     history.push(`/listeningnow/${userId}/`);
   };
+  const fetchRelatedPodcasts = async (podcast) => {
+    const response = await api.findPodcastBasedOnUserPref(podcast);
+    console.log(response);
+  };
 
   return (
     <>

@@ -36,6 +36,7 @@ const BASE_URL_DS = `http://ec2-3-66-174-245.eu-central-1.compute.amazonaws.com:
 // get -> /search/similar/:id
 // 2. for savedpodcast list
 router.post("similar/:id", verifyToken, async (req, res) => {
+  console.log(req.body);
   {
     description_original;
     title_original; //we get from front end from req.body
